@@ -1,6 +1,7 @@
 #include "Maths/Maths.h"
 
-class Rigidbody{
+namespace n2p{
+    class Rigidbody{
     private:
         float mass;
         float inertia;
@@ -24,4 +25,5 @@ class Rigidbody{
             accumulatedTorque += torque;
         }
 
-};
+    };
+}

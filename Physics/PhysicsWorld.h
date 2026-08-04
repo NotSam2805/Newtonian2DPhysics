@@ -1,7 +1,9 @@
 #include <vector>
 #include "Rigidbody.h"
 
-class PhysicsWorld {
+namespace n2p{
+    class PhysicsWorld {
     private:
         std::vector<Rigidbody> bodies;
-};
+    };
+}

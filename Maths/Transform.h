@@ -1,6 +1,8 @@
 #include "Vector2.h"
 
-struct Transform {
-    Vector2 position;
-    float rotation;
-};
+namespace n2p{
+    struct Transform {
+        Vector2 position;
+        float rotation;
+    };
+}

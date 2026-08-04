@@ -1,7 +1,8 @@
 #include <cmath>
 #include <iostream>
 
-class Vector2{
+namespace n2p{
+    class Vector2{
     public:
         float x;
         float y;
@@ -111,10 +112,12 @@ class Vector2{
             stream << "(" << vector.x << ", " << vector.y << ")";
             return stream;
         }
-};
+    };
 
-// Allow scalar * vector
-inline Vector2 operator*(float scalar, const Vector2& vector)
-{
-    return vector * scalar;
+    // Allow scalar * vector
+    inline Vector2 operator*(float scalar, const Vector2& vector)
+    {
+        return vector * scalar;
+    }
 }
+
