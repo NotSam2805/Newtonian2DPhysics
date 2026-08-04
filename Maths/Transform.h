@@ -1,6 +1,6 @@
-#include "Vector2D.h"
+#include "Vector2.h"
 
 struct Transform {
-    Vector2D position;
+    Vector2 position;
     float rotation;
 };

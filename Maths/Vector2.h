@@ -1,17 +1,17 @@
 #include <cmath>
 #include <iostream>
 
-class Vector2D{
+class Vector2{
     public:
         float x;
         float y;
 
         // Constructors
-        constexpr Vector2D() : x(0.0f), y(0.0f) {}
-        constexpr Vector2D(float x, float y) : x(x), y(y) {}
+        constexpr Vector2() : x(0.0f), y(0.0f) {}
+        constexpr Vector2(float x, float y) : x(x), y(y) {}
         
-        static constexpr Vector2D Zero(){
-            return Vector2D(0.0f, 0.0f);
+        static constexpr Vector2 Zero(){
+            return Vector2(0.0f, 0.0f);
         }
 
         float Magnitude() const{
@@ -24,14 +24,14 @@ class Vector2D{
             return (x*x + y*y);
         }
 
-        Vector2D Normalised() const{
+        Vector2 Normalised() const{
             float magnitude = Magnitude();
 
             if (magnitude == 0.0f){
-                return Vector2D::Zero();
+                return Vector2::Zero();
             }
 
-            return Vector2D(x / magnitude, y / magnitude);
+            return Vector2(x / magnitude, y / magnitude);
         }
 
         void Normalise(){
@@ -47,27 +47,27 @@ class Vector2D{
 
 
         // Operators
-        Vector2D operator+(Vector2D& other) const{
-            return Vector2D(x + other.x, y + other.y);
+        Vector2 operator+(Vector2& other) const{
+            return Vector2(x + other.x, y + other.y);
         }
 
-        Vector2D operator-(Vector2D& other) const{
-            return Vector2D(x - other.x, y - other.y);
+        Vector2 operator-(Vector2& other) const{
+            return Vector2(x - other.x, y - other.y);
         }
 
-        Vector2D operator-() const{
-            return Vector2D(-x, -y);
+        Vector2 operator-() const{
+            return Vector2(-x, -y);
         }
 
-        Vector2D operator*(float scalar) const{
-            return Vector2D(x * scalar, y * scalar);
+        Vector2 operator*(float scalar) const{
+            return Vector2(x * scalar, y * scalar);
         }
 
-        Vector2D operator/(float scalar) const{
-            return Vector2D(x / scalar, y / scalar);
+        Vector2 operator/(float scalar) const{
+            return Vector2(x / scalar, y / scalar);
         }
 
-        Vector2D& operator+=(const Vector2D& other)
+        Vector2& operator+=(const Vector2& other)
         {
             x += other.x;
             y += other.y;
@@ -76,7 +76,7 @@ class Vector2D{
         }
 
 
-        Vector2D& operator-=(const Vector2D& other)
+        Vector2& operator-=(const Vector2& other)
         {
             x -= other.x;
             y -= other.y;
@@ -85,7 +85,7 @@ class Vector2D{
         }
 
 
-        Vector2D& operator*=(float scalar)
+        Vector2& operator*=(float scalar)
         {
             x *= scalar;
             y *= scalar;
@@ -94,19 +94,19 @@ class Vector2D{
         }
 
 
-        bool operator==(const Vector2D& other) const
+        bool operator==(const Vector2& other) const
         {
             return x == other.x && y == other.y;
         }
 
 
-        bool operator!=(const Vector2D& other) const
+        bool operator!=(const Vector2& other) const
         {
             return !(*this == other);
         }
 
         // Debug printing
-        friend std::ostream& operator<<(std::ostream& stream, const Vector2D& vector)
+        friend std::ostream& operator<<(std::ostream& stream, const Vector2& vector)
         {
             stream << "(" << vector.x << ", " << vector.y << ")";
             return stream;
@@ -114,7 +114,7 @@ class Vector2D{
 };
 
 // Allow scalar * vector
-inline Vector2D operator*(float scalar, const Vector2D& vector)
+inline Vector2 operator*(float scalar, const Vector2& vector)
 {
     return vector * scalar;
 }
