@@ -1,4 +1,4 @@
-# Basic Newtonian Physics Simulation
+# Newtonian Physics Simulation
 A complete, self contained, Physics Engine and Render Pipeline. All components should be kept as simple as possible (and limited to 2D).
 
 # Structure
