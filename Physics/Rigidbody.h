@@ -12,20 +12,32 @@ namespace n2p{
         Vector2 accumulatedForces;
     public:
         // Constructor
-        Rigidbody(float mass = 1.0, Transform transform = {Vector2(), 0}, float inertia = 1.0) : 
-        mass(mass), transform(transform), velocity(Vector2()), accumulatedForces(Vector2()), inverseMass(1/mass) {}
+        explicit Rigidbody (float mass = 1.0f, const Transform& transform = Transform()) : 
+        mass(mass), transform(transform), velocity(Vector2()), accumulatedForces(Vector2()), inverseMass(mass > 0.0f ? 1.0f / mass : 0.0f) {}
 
-        void AddForce(Vector2 force){
+        void AddForce(const Vector2& force){
             accumulatedForces += force;
         }
 
         void Integrate(float dt){
             // Semi-implicit Euler
+            if (inverseMass == 0.0f){ return; }
+
             Vector2 acceleration = accumulatedForces * inverseMass;
             velocity += acceleration * dt;
             transform.position += velocity * dt;
+        }
 
+        void ClearForces(){
             accumulatedForces = Vector2::Zero();
         }
+
+        // Getters
+        const Vector2& GetPosition() const { return transform.position; }
+        const Vector2& GetVelocity() const { return velocity; }
+        float GetMass() const { return mass; }
+
+        // Setters
+        void SetPosition(const Vector2& position ){ transform.position = position; }
     };
 }
