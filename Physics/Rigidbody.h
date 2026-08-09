@@ -1,4 +1,5 @@
-#include "Maths/Maths.h"
+#pragma once
+#include "../Maths/Maths.h"
 
 namespace n2p{
     class Rigidbody{
@@ -12,20 +13,22 @@ namespace n2p{
         Vector2 accumulatedForces;
     public:
         // Constructor
-        explicit Rigidbody (float mass = 1.0f, const Transform& transform = Transform()) {}
+        explicit Rigidbody (float mass = 1.0f, const Transform& transform = Transform());
 
-        void AddForce(const Vector2& force) {}
+        void AddForce(const Vector2& force);
 
-        void Integrate(float dt) {}
+        void Integrate(float dt);
 
-        void ClearForces() {}
+        void ClearForces();
 
         // Getters
-        const Vector2& GetPosition() const {}
-        const Vector2& GetVelocity() const {}
-        float GetMass() const {}
+        const Vector2& GetPosition() const;
+
+        const Vector2& GetVelocity() const;
+
+        float GetMass() const;
 
         // Setters
-        void SetPosition(const Vector2& position ){}
+        void SetPosition(const Vector2& position);
     };
 }

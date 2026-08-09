@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 #include "Rigidbody.h"
 
@@ -6,18 +7,10 @@ namespace n2p{
     private:
         std::vector<Rigidbody*> bodies;
     public:
-        PhysicsWorld() {}
+        PhysicsWorld();
         
-        void Step(float dt){
-            /* 
-            Performs one time step, moving dt seconds.
-            Apply forces body -> Integrate body
-            Loop through all bodies
-            */
-        }
+        void Step(float dt);
 
-        void AddBody(Rigidbody* body){
-            bodies.push_back(body);
-        }
+        void AddBody(Rigidbody* body);
     };
 }

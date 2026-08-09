@@ -1,17 +1,21 @@
-#include "Maths/Maths.h"
+#include "Physics/Physics.h"
 #include <iostream>
 
-using namespace std;
-
 int main(){
-    // Test Vector2D class
+    n2p::PhysicsWorld world;
+    n2p::Rigidbody body;
 
-    Vector2D zero = Vector2D::Zero();
-    Vector2D up(0,1);
+    world.AddBody(&body);
+    body.AddForce(n2p::Vector2(1.0f, 1.0f));
 
-    Vector2D double_up = 2.0 * up;
+    // Should show (0,0)
+    std::cout << body.GetPosition() << "\n";
 
-    cout << double_up;
+    // Step forward 1 second
+    world.Step(1.0f);
+
+    // Should show (1,1)
+    std::cout << body.GetPosition() << "\n";
 
     return 0;
 }
