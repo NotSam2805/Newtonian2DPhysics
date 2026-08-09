@@ -1,4 +1,5 @@
 #include "PhysicsWorld.h"
+#include <vector>
 
 namespace n2p{
     // Constructor
@@ -20,4 +21,6 @@ namespace n2p{
     void PhysicsWorld::AddBody(Rigidbody* body) {
         bodies.push_back(body);
     }
+
+    const std::vector<Rigidbody*>* PhysicsWorld::GetBodies() const { return &bodies; }
 }

@@ -12,5 +12,7 @@ namespace n2p{
         void Step(float dt);
 
         void AddBody(Rigidbody* body);
+
+        const std::vector<Rigidbody*>* GetBodies() const;
     };
 }
