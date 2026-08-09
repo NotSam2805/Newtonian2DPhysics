@@ -9,103 +9,44 @@ namespace n2p{
         float y;
 
         // Constructors
-        constexpr Vector2() : x(0.0f), y(0.0f) {}
-        constexpr Vector2(float x, float y) : x(x), y(y) {}
+        constexpr Vector2(float x = 0.0f, float y = 0.0f);
         
-        static constexpr Vector2 Zero(){
-            return Vector2(0.0f, 0.0f);
-        }
+        static constexpr Vector2 Zero();
 
-        float Magnitude() const{
-            return std::sqrt(x*x + y*y);
-        }
+        float Magnitude() const;
 
 
         // Avoids expensive sqrt
-        float MagnitudeSqrd() const{
-            return (x*x + y*y);
-        }
+        float MagnitudeSqrd() const;
 
-        Vector2 Normalised() const{
-            float magnitude = Magnitude();
+        Vector2 Normalised() const;
 
-            if (magnitude == 0.0f){
-                return Vector2::Zero();
-            }
-
-            return Vector2(x / magnitude, y / magnitude);
-        }
-
-        void Normalise(){
-            float magnitude = Magnitude();
-
-            if (magnitude == 0.0f){
-                return;
-            }
-
-            x /= magnitude;
-            y /= magnitude;
-        }
+        void Normalise();
 
 
         // Operators
-        Vector2 operator+(Vector2& other) const{
-            return Vector2(x + other.x, y + other.y);
-        }
+        Vector2 operator+(Vector2& other) const;
 
-        Vector2 operator-(Vector2& other) const{
-            return Vector2(x - other.x, y - other.y);
-        }
+        Vector2 operator-(Vector2& other) const;
 
-        Vector2 operator-() const{
-            return Vector2(-x, -y);
-        }
+        // To give the negative
+        Vector2 operator-() const;
 
-        Vector2 operator*(float scalar) const{
-            return Vector2(x * scalar, y * scalar);
-        }
+        Vector2 operator*(float scalar) const;
 
-        Vector2 operator/(float scalar) const{
-            return Vector2(x / scalar, y / scalar);
-        }
+        Vector2 operator/(float scalar) const;
 
-        Vector2& operator+=(const Vector2& other)
-        {
-            x += other.x;
-            y += other.y;
-
-            return *this;
-        }
+        Vector2& operator+=(const Vector2& other);
 
 
-        Vector2& operator-=(const Vector2& other)
-        {
-            x -= other.x;
-            y -= other.y;
-
-            return *this;
-        }
+        Vector2& operator-=(const Vector2& other);
 
 
-        Vector2& operator*=(float scalar)
-        {
-            x *= scalar;
-            y *= scalar;
+        Vector2& operator*=(float scalar);
 
-            return *this;
-        }
+        bool operator==(const Vector2& other);
 
-
-        bool operator==(const Vector2& other) const
-        {
-            return x == other.x && y == other.y;
-        }
-
-
-        bool operator!=(const Vector2& other) const
-        {
-            return !(*this == other);
-        }
+        bool operator!=(const Vector2& other);
 
         // Debug printing
         friend std::ostream& operator<<(std::ostream& stream, const Vector2& vector)
@@ -114,11 +55,5 @@ namespace n2p{
             return stream;
         }
     };
-
-    // Allow scalar * vector
-    inline Vector2 operator*(float scalar, const Vector2& vector)
-    {
-        return vector * scalar;
-    }
 }
 
