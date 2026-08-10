@@ -1,6 +1,6 @@
 #pragma once
 #include "../Maths/Maths.h"
-#include "../Shapes/Shape.h"
+#include "../Shapes/Shapes.h"
 #include <memory>
 
 namespace n2p{
@@ -17,7 +17,7 @@ namespace n2p{
         std::unique_ptr<Shape> shape;
     public:
         // Constructor
-        explicit Rigidbody (float mass = 1.0f, const Transform& transform = Transform(), std::unique_ptr<Shape> shape);
+        explicit Rigidbody (float mass = 1.0f, const Transform& transform = Transform(), std::unique_ptr<Shape> shape = std::make_unique<Circle>(1.0f));
 
         void AddForce(const Vector2& force);
 

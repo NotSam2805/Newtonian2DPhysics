@@ -9,5 +9,5 @@ namespace n2p{
     
     float Rect::GetWidth() const { return width; }
 
-    const ShapeType Rect::GetType() const { return ShapeType::Rect; }
+    const ShapeType Rect::GetType() const { return ShapeType::rect; }
 }

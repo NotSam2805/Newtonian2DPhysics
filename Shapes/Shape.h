@@ -1,8 +1,8 @@
 namespace n2p{
     enum ShapeType {
-        Circle,
-        Rect,
-        Polygon
+        circle,
+        rect,
+        polygon
     };
 
     class Shape {
