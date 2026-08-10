@@ -1,8 +1,9 @@
 #include "Rigidbody.h"
+#include <memory>
 
 namespace n2p{
-    Rigidbody::Rigidbody (float mass, const Transform& transform) :
-    mass(mass), inverseMass(mass > 0.0f ? 1.0f / mass : 0.0f), transform(transform), velocity(Vector2::Zero()), accumulatedForces(Vector2::Zero()) {}
+    Rigidbody::Rigidbody (float mass, const Transform& transform, std::unique_ptr<Shape> shape) :
+    mass(mass), inverseMass(mass > 0.0f ? 1.0f / mass : 0.0f), transform(transform), shape(std::make_unique<Shape>(shape)), velocity(Vector2::Zero()), accumulatedForces(Vector2::Zero()) {}
 
     void Rigidbody::Integrate (float dt) {
         // Semi-implicit Euler
