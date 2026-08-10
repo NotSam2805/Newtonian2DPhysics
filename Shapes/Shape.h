@@ -6,11 +6,11 @@ namespace n2p{
     };
 
     class Shape {
-    private:
-        ShapeType type;
-    public:
-        virtual ~Shape() = default;
+        private:
+            ShapeType type;
+        public:
+            virtual ~Shape() = default;
 
-        virtual ShapeType GetType() const = 0;
+            const virtual ShapeType GetType() const = 0;
     };
 }

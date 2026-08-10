@@ -6,10 +6,12 @@ namespace n2p{
         private:
             float radius;
         public:
+            // Constructor
             explicit Circle(float radius);
 
+            // Getters
             float GetRadius() const;
 
-            ShapeType GetType() const override;
+            const ShapeType GetType() const override;
     };
 }
