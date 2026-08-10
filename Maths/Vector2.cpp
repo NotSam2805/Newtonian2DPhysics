@@ -1,4 +1,5 @@
 #include "Vector2.h"
+#include <cmath>
 
 namespace n2p{
     // Constructor
@@ -34,6 +35,14 @@ namespace n2p{
 
         x /= magnitude;
         y /= magnitude;
+    }
+
+    // Give the vector rotated around an origin, rotation given in radians clockwise
+    Vector2 Vector2::Rotate(float rotation, Vector2& origin) const{
+        float rot_x = (std::cos(-rotation) * (x - origin.x)) - (std::sin(-rotation) * (y - origin.y)) + origin.x;
+        float rot_y = (std::sin(-rotation) * (x - origin.x)) - (std::cos(-rotation) * (y - origin.y)) + origin.x;
+
+        return Vector2(rot_x, rot_y);
     }
 
     // Operators

@@ -1,5 +1,4 @@
 #pragma once
-#include <cmath>
 #include <iostream>
 
 namespace n2p{
@@ -15,13 +14,15 @@ namespace n2p{
 
         float Magnitude() const;
 
-
         // Avoids expensive sqrt
         float MagnitudeSqrd() const;
 
         Vector2 Normalised() const;
 
         void Normalise();
+
+        // Give the vector rotated around an origin, rotation given in radians clockwise
+        Vector2 Rotate(float rotation, Vector2& origin = Vector2::Zero()) const;
 
 
         // Operators
@@ -38,9 +39,7 @@ namespace n2p{
 
         Vector2& operator+=(const Vector2& other);
 
-
         Vector2& operator-=(const Vector2& other);
-
 
         Vector2& operator*=(float scalar);
 
