@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\samdu\OneDrive\ProgrammingStuff\C++\Newtonian2DPhysics\build\CMakeFiles\380b2d272c0271a7cb4539291b167ad1\PACKAGE_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{9C53BB13-D84A-34AC-A613-C3C4C94C6755}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
