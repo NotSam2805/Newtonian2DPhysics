@@ -2,11 +2,6 @@
 #include <cmath>
 
 namespace n2p{
-    // Constructor
-    constexpr Vector2::Vector2(float x, float y) : x(x), y(y) {}
-    
-    constexpr Vector2 Vector2::Zero() { return Vector2(); }
-
     float Vector2::Magnitude() const {
         return std::sqrt(x*x + y*y);
     }
@@ -38,7 +33,7 @@ namespace n2p{
     }
 
     // Give the vector rotated around an origin, rotation given in radians clockwise
-    Vector2 Vector2::Rotate(float rotation, Vector2& origin) const{
+    Vector2 Vector2::Rotate(float rotation, const Vector2& origin) const{
         float rot_x = (std::cos(-rotation) * (x - origin.x)) - (std::sin(-rotation) * (y - origin.y)) + origin.x;
         float rot_y = (std::sin(-rotation) * (x - origin.x)) - (std::cos(-rotation) * (y - origin.y)) + origin.x;
 
@@ -46,11 +41,11 @@ namespace n2p{
     }
 
     // Operators
-    Vector2 Vector2::operator+ (Vector2& other) const {
+    Vector2 Vector2::operator+ (const Vector2& other) const {
         return Vector2(x + other.x, y + other.y);
     }
 
-    Vector2 Vector2::operator- (Vector2& other) const {
+    Vector2 Vector2::operator- (const Vector2& other) const {
         return Vector2(x - other.x, y - other.y);
     }
 

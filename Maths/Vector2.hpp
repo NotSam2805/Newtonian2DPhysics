@@ -8,9 +8,9 @@ namespace n2p{
         float y;
 
         // Constructors
-        constexpr Vector2(float x = 0.0f, float y = 0.0f);
+        constexpr Vector2(float x = 0.0f, float y = 0.0f) : x(x), y(y) {}
         
-        static constexpr Vector2 Zero();
+        static constexpr Vector2 Zero() { return Vector2(); }
 
         float Magnitude() const;
 
@@ -22,13 +22,13 @@ namespace n2p{
         void Normalise();
 
         // Give the vector rotated around an origin, rotation given in radians clockwise
-        Vector2 Rotate(float rotation, Vector2& origin = Vector2::Zero()) const;
+        Vector2 Rotate(float rotation, const Vector2& origin) const;
 
 
         // Operators
-        Vector2 operator+(Vector2& other) const;
+        Vector2 operator+(const Vector2& other) const;
 
-        Vector2 operator-(Vector2& other) const;
+        Vector2 operator-(const Vector2& other) const;
 
         // To give the negative
         Vector2 operator-() const;

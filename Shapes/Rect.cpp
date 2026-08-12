@@ -1,4 +1,4 @@
-#include "Rect.h"
+#include "Rect.hpp"
 
 namespace n2p{
     // Constructor
