@@ -1,6 +1,6 @@
 #pragma once
-#include "Shape.h"
-#include "../Maths/Vector2.h"
+#include "Shape.hpp"
+#include "../Maths/Vector2.hpp"
 
 namespace n2p{
     class Rect : public Shape{

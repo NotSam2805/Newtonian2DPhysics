@@ -1,4 +1,4 @@
-#include "Rigidbody.h"
+#include "Rigidbody.hpp"
 #include <memory>
 
 namespace n2p{

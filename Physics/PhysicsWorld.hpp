@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "Rigidbody.h"
+#include "Rigidbody.hpp"
 
 namespace n2p{
     class PhysicsWorld {

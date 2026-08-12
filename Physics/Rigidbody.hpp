@@ -1,6 +1,6 @@
 #pragma once
-#include "../Maths/Maths.h"
-#include "../Shapes/Shapes.h"
+#include "../Maths/Maths.hpp"
+#include "../Shapes/Shapes.hpp"
 #include <memory>
 
 namespace n2p{

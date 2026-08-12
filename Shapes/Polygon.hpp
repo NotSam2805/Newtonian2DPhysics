@@ -1,7 +1,7 @@
 #pragma once
-#include "Shape.h"
+#include "Shape.hpp"
 #include <vector>
-#include "../Maths/Vector2.h"
+#include "../Maths/Vector2.hpp"
 
 namespace n2p {
     class Polygon : public Shape{

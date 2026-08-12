@@ -1,5 +1,5 @@
-#include "Maths/Maths.h"
-#include "Physics/Rigidbody.h"
+#include "Maths/Maths.hpp"
+#include "Physics/Rigidbody.hpp"
 
 namespace n2p{
     struct Contact {
