@@ -1,0 +1,8 @@
+[
+{
+  "directory": "C:/Users/samdu/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/out/build/GCC 15.2.0 x86_64-w64-mingw32 (ucrt64)",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe   -g -o CMakeFiles\\Newtonian2DPhysics.dir\\main.cpp.obj -c C:\\Users\\samdu\\OneDrive\\ProgrammingStuff\\C++\\Newtonian2DPhysics\\main.cpp",
+  "file": "C:/Users/samdu/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/main.cpp",
+  "output": "CMakeFiles/Newtonian2DPhysics.dir/main.cpp.obj"
+}
+]
