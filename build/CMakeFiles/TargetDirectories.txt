@@ -1,9 +1,0 @@
-C:/Users/samdu/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/build/CMakeFiles/Newtonian2DPhysics.dir
-C:/Users/samdu/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/build/CMakeFiles/Experimental.dir
-C:/Users/samdu/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/build/CMakeFiles/Nightly.dir
-C:/Users/samdu/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/build/CMakeFiles/Continuous.dir
-C:/Users/samdu/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/build/CMakeFiles/NightlyMemoryCheck.dir
-C:/Users/samdu/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/build/CMakeFiles/PACKAGE.dir
-C:/Users/samdu/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/build/CMakeFiles/RUN_TESTS.dir
-C:/Users/samdu/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/samdu/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/build/CMakeFiles/ZERO_CHECK.dir
