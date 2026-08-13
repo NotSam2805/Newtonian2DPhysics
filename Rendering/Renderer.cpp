@@ -116,7 +116,8 @@ namespace n2p{
 
         Vector2 centre = WorldToScreen(circleBody.GetPosition());
         float radius = shape->GetRadius() * camera->zoom;
-
+        
+        SDL_SetRenderDrawColor(renderer, shape->colour.red, shape->colour.green, shape->colour.blue, shape->colour.alpha);
         SDL_RenderFillCircle(renderer, centre.x, centre.y, radius);
     }
 

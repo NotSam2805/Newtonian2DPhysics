@@ -40,7 +40,7 @@ int main(int argc, char *argv[]){
 
     // Setup initial physics world
     PhysicsWorld world{};
-    Renderer renderer{800, 600};
+    Renderer renderer{800, 600, Camera{Vector2::Zero(), 10.0f}};
 
     // Make a blue square
     Rigidbody square(
@@ -58,9 +58,9 @@ int main(int argc, char *argv[]){
     world.AddBody(&ball);
 
     // Add an upwards force to the square
-    square.AddForce(Vector2(0.0f, 0.5f));
+    square.AddForce(Vector2(0.0f, 25.0f));
     // Add a downwards force to the ball
-    ball.AddForce(Vector2(0.0f, -1.0f));
+    ball.AddForce(Vector2(0.0f, -25.0f));
 
     while (running){
         auto deltatime = clock::now() - timestart;
@@ -77,12 +77,15 @@ int main(int argc, char *argv[]){
             frameCount++;
             frameCount %= 60;
 
-            world.Step(std::chrono::duration_cast<std::chrono::milliseconds>(timestep).count() / 1000.0f);
+            float seconds = std::chrono::duration_cast<std::chrono::milliseconds>(timestep).count() / 1000.0f;
+
+            world.Step(seconds);
 
             // Update renderer on every second frame
             if (frameCount % 2 == 0){
                 renderer.Clear();
                 renderer.DrawWorld(world);
+                renderer.Present();
             }
 
             lag -= timestep;
