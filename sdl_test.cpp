@@ -13,6 +13,26 @@ int main(int argc, char *argv[]){
         return 1;
     }
 
+    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
+
+    if (NULL == renderer){
+        std::cout << "Cannot create renderer" << SDL_GetError() << std::endl;
+        return 1;
+    }
+
+    SDL_SetRenderDrawColor(renderer, 33, 33, 33, SDL_ALPHA_OPAQUE); // Set colour to dark grey
+    SDL_RenderClear(renderer);
+
+    /* draw a filled rectangle in the middle of the canvas. */
+    SDL_Rect rect;
+    SDL_SetRenderDrawColor(renderer, 0, 0, 255, SDL_ALPHA_OPAQUE);  /* blue, full alpha */
+    rect.x = rect.y = 100;
+    rect.w = 440;
+    rect.h = 280;
+    SDL_RenderFillRect(renderer, &rect);
+
+    SDL_RenderPresent(renderer); // Show rendered objects
+
     SDL_Event windowEvent;
 
     while (true){
@@ -24,6 +44,7 @@ int main(int argc, char *argv[]){
     }
 
     SDL_DestroyWindow(window);
+    SDL_DestroyRenderer(renderer);
     SDL_Quit();
 
     return EXIT_SUCCESS;
