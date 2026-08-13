@@ -1,4 +1,4 @@
-#include "Physics/Physics.h"
+#include "Physics/Physics.hpp"
 #include <iostream>
 
 int main(){

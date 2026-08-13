@@ -1,3 +1,5 @@
+#pragma once
+
 namespace n2p{
     enum ShapeType {
         circle,

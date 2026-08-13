@@ -2,7 +2,7 @@
 
 namespace n2p{
     // Constructor
-    explicit Circle::Circle(float radius) : radius(radius) {}
+    Circle::Circle(float radius) : radius(radius) {}
 
     // Getters
     float Circle::GetRadius() const { return radius; }
