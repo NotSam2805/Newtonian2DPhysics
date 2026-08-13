@@ -1,6 +1,5 @@
 #pragma once
 #include "../SDL2/include/SDL.h"
-#include "Colour.hpp"
 #include "../Physics/Physics.hpp"
 #include "../Shapes/Shapes.hpp"
 #include "Camera.hpp"
@@ -30,7 +29,7 @@ namespace n2p{
             // Constructor
             Renderer(int windowWidth, int windowHeight, Camera camera = {Vector2::Zero(), 1.0f}, Colour backgroundColour = {33,33,33,255});
             // Destructor
-            ~Renderer();
+            ~Renderer() = default;
 
             // Clear to background colour
             void Clear();

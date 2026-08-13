@@ -17,7 +17,9 @@ namespace n2p{
         std::unique_ptr<Shape> shape;
     public:
         // Constructor
-        explicit Rigidbody (float mass = 1.0f, const Transform& transform = Transform(), std::unique_ptr<Shape> shape = std::make_unique<Circle>(1.0f));
+        explicit Rigidbody (float mass = 1.0f, const Transform& transform = Transform(), std::unique_ptr<Shape> shape = std::make_unique<Circle>(1.0f, Colour{255,255,255,255}));
+
+        ~Rigidbody() = default;
 
         void AddForce(const Vector2& force);
 

@@ -4,3 +4,4 @@
 #include "Circle.hpp"
 #include "Rect.hpp"
 #include "Polygon.hpp"
+#include "Colour.hpp"
