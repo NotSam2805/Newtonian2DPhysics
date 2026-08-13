@@ -1,6 +1,7 @@
 #pragma once
 #include "Shape.hpp"
 #include "../Maths/Vector2.hpp"
+#include "Colour.hpp"
 
 namespace n2p{
     class Rect : public Shape{
@@ -8,8 +9,10 @@ namespace n2p{
             float width;
             float height;
         public:
+            Colour colour;
+            
             // Constructor
-            explicit Rect(float width, float height);
+            explicit Rect(float width, float height, Colour colour);
 
             // Getters
             float GetWidth() const;

@@ -2,7 +2,7 @@
 
 namespace n2p{
     // Constructor
-    Rect::Rect(float width, float height) : width(width), height(height) {};
+    Rect::Rect(float width, float height, Colour colour) : width(width), height(height), colour(colour) {};
 
     // Getters
     float Rect::GetHeight() const { return height; }

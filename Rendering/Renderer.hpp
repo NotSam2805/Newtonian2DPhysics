@@ -3,6 +3,7 @@
 #include "Colour.hpp"
 #include "../Physics/Physics.hpp"
 #include "../Shapes/Shapes.hpp"
+#include "Camera.hpp"
 
 namespace n2p{
     class Renderer{
@@ -10,24 +11,42 @@ namespace n2p{
             SDL_Window *window;
             SDL_Renderer *renderer;
 
-            Colour backgroundColour;
+            Colour *backgroundColour;
 
-        public:
-            Renderer();
-            ~Renderer();
+            Camera *camera;
 
-            void Clear();
-
-            void DrawWorld(const PhysicsWorld& world);
-
+            const int CIRCLE_POINTS = 100;
+            
+            // Draw functions
             void DrawBody(const Rigidbody& body);
 
-            void DrawCircle(const Circle& circle);
+            void DrawCircle(const Rigidbody& circle);
 
-            void DrawRect(const Rect& rect);
+            void DrawRect(const Rigidbody& rect);
 
-            void DrawPolygon(const Polygon& poly);
+            void DrawPolygon(const Rigidbody& poly);
 
+        public:
+            // Constructor
+            Renderer(int windowWidth, int windowHeight, Camera camera = {Vector2::Zero(), 1.0f}, Colour backgroundColour = {33,33,33,255});
+            // Destructor
+            ~Renderer();
+
+            // Clear to background colour
+            void Clear();
+
+            // Draw all bodies in world
+            void DrawWorld(const PhysicsWorld& world);
+
+            // Show rendered image
             void Present();
+
+            // Returns if the position is on the screen
+            bool IsInScreenBounds(const Vector2& screenPosition);
+
+            // Returns the screen position for any world position
+            Vector2 WorldToScreen(const Vector2& world);
+
+            void Quit();
     };
 }

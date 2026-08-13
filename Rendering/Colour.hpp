@@ -1,10 +1,10 @@
-#include "SDL2/include/SDL_stdinc.h"
+#include <cstdint>
 
 namespace n2p{
     struct Colour{
-        Uint8 red;
-        Uint8 green;
-        Uint8 blue;
-        Uint8 alpha;
+        uint8_t red;
+        uint8_t green;
+        uint8_t blue;
+        uint8_t alpha;
     };
 }

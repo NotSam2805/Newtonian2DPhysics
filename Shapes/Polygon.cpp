@@ -4,7 +4,7 @@
 
 namespace n2p{
     // Constructor
-    Polygon::Polygon(std::vector<Vector2*> vertices) : vertices(vertices) {}
+    Polygon::Polygon(std::vector<Vector2*> vertices, Colour colour) : vertices(vertices), colour(colour) {}
 
     // Getters
     const ShapeType Polygon::GetType() const{ return ShapeType::polygon; }

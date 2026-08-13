@@ -1,8 +1,9 @@
 #include "Circle.hpp"
+#include "Colour.hpp"
 
 namespace n2p{
     // Constructor
-    Circle::Circle(float radius) : radius(radius) {}
+    Circle::Circle(float radius, Colour colour) : radius(radius), colour(colour) {}
 
     // Getters
     float Circle::GetRadius() const { return radius; }
