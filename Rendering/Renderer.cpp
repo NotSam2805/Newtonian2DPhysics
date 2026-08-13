@@ -138,7 +138,7 @@ namespace n2p{
     }
 
     Renderer::Renderer(int windowWidth, int windowHeight, Camera camera, Colour backgroundColour) : camera(&camera), backgroundColour(&backgroundColour) {
-        window = SDL_CreateWindow("Newtonian 2D Physics", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowWidth, windowHeight, SDL_WINDOW_ALLOW_HIGHDPI);
+        window = SDL_CreateWindow("Newtonian 2D Physics", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowWidth, windowHeight, SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE);
         renderer = SDL_CreateRenderer(window, -1, 0);
     }
 
