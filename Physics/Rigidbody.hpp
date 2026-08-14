@@ -37,6 +37,8 @@ namespace n2p{
         Shape* GetShape();
         const Shape* GetShape() const;
 
+        const Transform& GetTransform() const;
+
         // Setters
         void SetPosition(const Vector2& position);
     };

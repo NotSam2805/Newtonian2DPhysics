@@ -135,7 +135,21 @@ namespace n2p{
     }
 
     void Renderer::DrawPolygon(const Rigidbody& polyBody){
-        // TODO
+        const Polygon* shape = static_cast<const Polygon*>(polyBody.GetShape());
+
+        const Transform& transform = polyBody.GetTransform();
+
+        SDL_SetRenderDrawColor(renderer, shape->colour.red, shape->colour.green, shape->colour.blue, shape->colour.alpha);
+
+        for (size_t i = 0; i < shape->GetVertexCount(); ++i){
+            Vector2 aWorld = shape->GetWorldVertex(i, transform);
+            Vector2 bWorld = shape->GetWorldVertex((i + 1) % shape->GetVertexCount(), transform);
+
+            Vector2 a = WorldToScreen(aWorld);
+            Vector2 b = WorldToScreen(bWorld);
+            
+            SDL_RenderDrawLine(renderer, a.x, a.y, b.x, b.y);
+        }
     }
 
     Renderer::Renderer(int windowWidth, int windowHeight, Camera camera, Colour backgroundColour) : camera(&camera), backgroundColour(&backgroundColour) {

@@ -33,4 +33,6 @@ namespace n2p{
     void Rigidbody::SetPosition(const Vector2& position) { transform.position = position; }
 
     const Shape* Rigidbody::GetShape() const { return shape.get(); }
+
+    const Transform& Rigidbody::GetTransform() const{ return transform; }
 }

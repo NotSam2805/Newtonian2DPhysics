@@ -22,7 +22,7 @@ namespace n2p{
         void Normalise();
 
         // Give the vector rotated around an origin, rotation given in radians clockwise
-        Vector2 Rotate(float rotation, const Vector2& origin) const;
+        Vector2 Rotate(float rotation, const Vector2& origin = Vector2::Zero()) const;
 
 
         // Operators

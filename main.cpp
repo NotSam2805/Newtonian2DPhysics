@@ -2,6 +2,7 @@
 #include <memory>
 #include "Physics/Physics.hpp"
 #include "Rendering/Renderer.hpp"
+#include "Shapes/Shapes.hpp"
 #include "SDL2/include/SDL.h"
 
 #include <chrono>
@@ -16,7 +17,7 @@ constexpr std::chrono::nanoseconds timestep(16ms);
 bool HandleEvents(){
     SDL_Event windowEvent;
 
-    if (SDL_PollEvent(&windowEvent)){
+    while (SDL_PollEvent(&windowEvent)){
         if(SDL_QUIT == windowEvent.type){
             return true;
         }
@@ -45,7 +46,7 @@ int main(int argc, char *argv[]){
     // Make a blue square
     Rigidbody square(
         1.0f, Transform{Vector2(-25.0f,0.0f)},
-        std::make_unique<Rect>(10.0f, 10.0f, n2p::Colour{0,0,255,SDL_ALPHA_OPAQUE})
+        std::make_unique<Polygon>(Polygon::Square())
     );
     
     // Make a red ball
@@ -73,7 +74,7 @@ int main(int argc, char *argv[]){
             running = false;
         }
 
-        if (lag >= timestep){
+        while (lag >= timestep){
             frameCount++;
             frameCount %= 60;
 
