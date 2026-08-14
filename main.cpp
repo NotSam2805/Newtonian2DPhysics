@@ -44,23 +44,23 @@ int main(int argc, char *argv[]){
 
     // Make a blue square
     Rigidbody square(
-        1.0f, Transform(),
+        1.0f, Transform{Vector2(-25.0f,0.0f)},
         std::make_unique<Rect>(10.0f, 10.0f, n2p::Colour{0,0,255,SDL_ALPHA_OPAQUE})
     );
     
     // Make a red ball
     Rigidbody ball(
         1.0f,
-        Transform{Vector2(25.0f,0.0f)}, std::make_unique<Circle>(0.5f, n2p::Colour{255,0,0,SDL_ALPHA_OPAQUE})
+        Transform{Vector2(25.0f,0.0f)}, std::make_unique<Circle>(5.0f, n2p::Colour{255,0,0,SDL_ALPHA_OPAQUE})
     );
 
     world.AddBody(&square);
     world.AddBody(&ball);
 
-    // Add an upwards force to the square
-    square.AddForce(Vector2(0.0f, 25.0f));
-    // Add a downwards force to the ball
-    ball.AddForce(Vector2(0.0f, -25.0f));
+    // Add an rightwards force to the square
+    square.AddForce(Vector2(100.0f, 0.0f));
+    // Add a leftwards force to the ball
+    ball.AddForce(Vector2(-100.0f, 0.0f));
 
     while (running){
         auto deltatime = clock::now() - timestart;
@@ -81,12 +81,9 @@ int main(int argc, char *argv[]){
 
             world.Step(seconds);
 
-            // Update renderer on every second frame
-            if (frameCount % 2 == 0){
-                renderer.Clear();
-                renderer.DrawWorld(world);
-                renderer.Present();
-            }
+            renderer.Clear();
+            renderer.DrawWorld(world);
+            renderer.Present();
 
             lag -= timestep;
         }

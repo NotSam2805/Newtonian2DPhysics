@@ -128,7 +128,7 @@ namespace n2p{
 
         SDL_Rect renderRect;
         SDL_SetRenderDrawColor(renderer, shape->colour.red, shape->colour.green, shape->colour.blue, shape->colour.alpha);
-        renderRect.x = screenPos.x; renderRect.y = screenPos.y;
+        renderRect.x = screenPos.x - (shape->GetWidth() * camera->zoom * 0.5f); renderRect.y = screenPos.y - (shape->GetHeight() * camera->zoom * 0.5f); // renderRect is drawn from top left, not centre
         renderRect.w = shape->GetWidth() * camera->zoom;
         renderRect.h = shape->GetHeight() * camera->zoom;
         SDL_RenderFillRect(renderer, &renderRect);
