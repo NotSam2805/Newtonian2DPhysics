@@ -46,7 +46,7 @@ int main(int argc, char *argv[]){
     // Make a blue square
     Rigidbody square(
         1.0f, Transform{Vector2(-25.0f,0.0f)},
-        std::make_unique<Polygon>(Polygon::Square())
+        std::make_unique<Polygon>(Polygon::Square(n2p::Colour{0,0,255,SDL_ALPHA_OPAQUE}))
     );
     
     // Make a red ball

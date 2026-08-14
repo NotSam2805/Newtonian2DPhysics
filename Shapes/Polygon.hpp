@@ -27,8 +27,6 @@ namespace n2p {
 
             const Vector2& GetWorldVertex(int index, Transform transform) const;
 
-            static constexpr Polygon Square();
-
             // Getters
             const ShapeType GetType() const override;
 
