@@ -13,7 +13,7 @@ namespace n2p{
 
     const size_t Polygon::GetVertexCount() const { return vertices.size(); }
 
-    const Vector2& Polygon::GetWorldVertex(int index, Transform transform) const{
+    const Vector2 Polygon::GetWorldVertex(int index, Transform transform) const{
         Vector2* vertex = vertices[index];
         Vector2 worldVertex = vertex->Rotate(transform.rotation);
         worldVertex += transform.position;

@@ -135,7 +135,6 @@ namespace n2p{
     }
 
     void Renderer::DrawPolygon(const Rigidbody& polyBody){
-        // SOMETHING IN THIS FUNCTION IS BROKEN
         const Polygon* shape = static_cast<const Polygon*>(polyBody.GetShape());
 
         const Transform& transform = polyBody.GetTransform();
@@ -143,8 +142,8 @@ namespace n2p{
         SDL_SetRenderDrawColor(renderer, shape->colour.red, shape->colour.green, shape->colour.blue, shape->colour.alpha);
 
         for (size_t i = 0; i < shape->GetVertexCount(); ++i){
-            Vector2 aWorld = shape->GetWorldVertex(i, transform);
-            Vector2 bWorld = shape->GetWorldVertex((i + 1) % shape->GetVertexCount(), transform);
+            Vector2 aWorld = shape->GetWorldVertex(i, transform);// Bug on this line
+            Vector2 bWorld = shape->GetWorldVertex((i + 1) % int(shape->GetVertexCount()), transform);
 
             Vector2 a = WorldToScreen(aWorld);
             Vector2 b = WorldToScreen(bWorld);
@@ -153,13 +152,13 @@ namespace n2p{
         }
     }
 
-    Renderer::Renderer(int windowWidth, int windowHeight, Camera camera, Colour backgroundColour) : camera(&camera), backgroundColour(&backgroundColour) {
+    Renderer::Renderer(int windowWidth, int windowHeight, Camera camera, Colour backgroundColour) : camera(&camera), backgroundColour(backgroundColour) {
         window = SDL_CreateWindow("Newtonian 2D Physics", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowWidth, windowHeight, SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE);
         renderer = SDL_CreateRenderer(window, -1, 0);
     }
 
     void Renderer::Clear(){
-        SDL_SetRenderDrawColor(renderer, backgroundColour->red, backgroundColour->green, backgroundColour->blue, backgroundColour->alpha); // Set colour to dark grey
+        SDL_SetRenderDrawColor(renderer, backgroundColour.red, backgroundColour.green, backgroundColour.blue, backgroundColour.alpha); // Set to background colour
         SDL_RenderClear(renderer);
     }
 

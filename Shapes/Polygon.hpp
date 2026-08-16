@@ -25,7 +25,7 @@ namespace n2p {
                 }, colour);
             }
 
-            const Vector2& GetWorldVertex(int index, Transform transform) const;
+            const Vector2 GetWorldVertex(int index, Transform transform) const;
 
             // Getters
             const ShapeType GetType() const override;

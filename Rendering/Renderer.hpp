@@ -10,7 +10,7 @@ namespace n2p{
             SDL_Window *window;
             SDL_Renderer *renderer;
 
-            Colour *backgroundColour;
+            Colour backgroundColour;
 
             Camera *camera;
 
@@ -27,7 +27,7 @@ namespace n2p{
 
         public:
             // Constructor
-            Renderer(int windowWidth, int windowHeight, Camera camera = {Vector2::Zero(), 1.0f}, Colour backgroundColour = {33,33,33,255});
+            Renderer(int windowWidth, int windowHeight, Camera camera = {Vector2::Zero(), 1.0f}, Colour backgroundColour = Colour{33,33,33,255});
             // Destructor
             ~Renderer() = default;
 
