@@ -15,6 +15,7 @@ namespace n2p{
         for (Rigidbody* body : bodies){
             body->Integrate(dt);
             body->ClearForces();
+            body->ClearTorques();
         }
     }
 

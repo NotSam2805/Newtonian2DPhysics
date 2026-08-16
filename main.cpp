@@ -46,13 +46,15 @@ int main(int argc, char *argv[]){
     // Make a blue square
     Rigidbody square(
         1.0f, Transform{Vector2(-25.0f,0.0f)},
-        std::make_unique<Polygon>(Polygon::Square(n2p::Colour{0,0,255,SDL_ALPHA_OPAQUE}))
+        std::make_unique<Polygon>(Polygon::Square(n2p::Colour{0,0,255,SDL_ALPHA_OPAQUE})),
+        1.0f
     );
     
     // Make a red ball
     Rigidbody ball(
         1.0f,
-        Transform{Vector2(25.0f,0.0f)}, std::make_unique<Circle>(5.0f, n2p::Colour{255,0,0,SDL_ALPHA_OPAQUE})
+        Transform{Vector2(25.0f,0.0f)}, std::make_unique<Circle>(5.0f, n2p::Colour{255,0,0,SDL_ALPHA_OPAQUE}),
+        1.0f
     );
 
     world.AddBody(&square);
@@ -62,6 +64,9 @@ int main(int argc, char *argv[]){
     square.AddForce(Vector2(100.0f, 0.0f));
     // Add a leftwards force to the ball
     ball.AddForce(Vector2(-100.0f, 0.0f));
+
+    // Make the square spin
+    square.AddTorque(100.0f);
 
     while (running){
         auto deltatime = clock::now() - timestart;
@@ -87,6 +92,8 @@ int main(int argc, char *argv[]){
             renderer.Present();
 
             lag -= timestep;
+
+            std::cout << frameCount << std::endl;
         }
 
         // calculate how close or far we are from the next timestep (for future interpolation)
