@@ -141,9 +141,10 @@ namespace n2p{
 
         SDL_SetRenderDrawColor(renderer, shape->colour.red, shape->colour.green, shape->colour.blue, shape->colour.alpha);
 
-        for (size_t i = 0; i < shape->GetVertexCount(); ++i){
+        int count = shape->GetVertexCount();
+        for (size_t i = 0; i < count; ++i){
             Vector2 aWorld = shape->GetWorldVertex(i, transform);// Bug on this line
-            Vector2 bWorld = shape->GetWorldVertex((i + 1) % int(shape->GetVertexCount()), transform);
+            Vector2 bWorld = shape->GetWorldVertex((i + 1) % count, transform);
 
             Vector2 a = WorldToScreen(aWorld);
             Vector2 b = WorldToScreen(bWorld);

@@ -1,5 +1,6 @@
 #include "Rigidbody.hpp"
 #include <memory>
+#include <cmath>
 
 namespace n2p{
     Rigidbody::Rigidbody (float mass, const Transform& transform, std::unique_ptr<Shape> shape, float inertia) :
@@ -19,6 +20,7 @@ namespace n2p{
             float rotationalAcceleration = accumulatedTorque * inverseInertia;
             rotationalVelocity += rotationalAcceleration * dt;
             transform.rotation += rotationalVelocity * dt;
+            transform.rotation = std::fmodf(transform.rotation, 2.0f * PI);
         }
     }
 

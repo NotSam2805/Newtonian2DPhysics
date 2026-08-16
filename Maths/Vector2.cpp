@@ -34,8 +34,11 @@ namespace n2p{
 
     // Give the vector rotated around an origin, rotation given in radians clockwise
     Vector2 Vector2::Rotate(float rotation, const Vector2& origin) const{
-        float rot_x = (std::cos(-rotation) * (x - origin.x)) - (std::sin(-rotation) * (y - origin.y)) + origin.x;
-        float rot_y = (std::sin(-rotation) * (x - origin.x)) - (std::cos(-rotation) * (y - origin.y)) + origin.x;
+        float c = std::cos(rotation);
+        float s = std::sin(rotation);
+
+        float rot_x = ((x - origin.x) * c) - ((y - origin.y) * s) + origin.x;
+        float rot_y = ((x - origin.x) * s) + ((y - origin.y) * c) + origin.y;
 
         return Vector2(rot_x, rot_y);
     }
