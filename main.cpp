@@ -92,8 +92,6 @@ int main(int argc, char *argv[]){
             renderer.Present();
 
             lag -= timestep;
-
-            std::cout << frameCount << std::endl;
         }
 
         // calculate how close or far we are from the next timestep (for future interpolation)

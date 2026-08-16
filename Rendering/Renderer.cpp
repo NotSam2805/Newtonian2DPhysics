@@ -135,7 +135,7 @@ namespace n2p{
     }
 
     void Renderer::DrawPolygon(const Rigidbody& polyBody){
-
+        // SOMETHING IN THIS FUNCTION IS BROKEN
         const Polygon* shape = static_cast<const Polygon*>(polyBody.GetShape());
 
         const Transform& transform = polyBody.GetTransform();
