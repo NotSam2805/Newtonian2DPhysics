@@ -4,6 +4,7 @@
 #include "Colour.hpp"
 
 namespace n2p{
+    // DEPRECATED - use Polygon
     class Rect : public Shape{
         private:
             float width;

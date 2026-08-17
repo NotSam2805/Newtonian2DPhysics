@@ -1,13 +1,27 @@
 #include "Maths/Maths.hpp"
 #include "Physics/Rigidbody.hpp"
+#include <vector>
 
 namespace n2p{
+    struct CollisionPair{
+        Rigidbody* bodyA;
+        Rigidbody* bodyB;
+    };
+
     struct Contact {
-        Rigidbody* a;
-        Rigidbody* b;
+        Vector2 point;
+        float penetration;
+    };
+
+    struct Manifold {
+        CollisionPair pair;
 
         Vector2 normal;
+
         float penetration;
-        Vector2 contactPoint;
+
+        std::vector<Contact> contacts;
+
+        bool colliding;
     };
 }

@@ -23,5 +23,5 @@ namespace n2p{
         bodies.push_back(body);
     }
 
-    const std::vector<Rigidbody*>& PhysicsWorld::GetBodies() const { return bodies; }
+    const std::vector<Rigidbody*> PhysicsWorld::GetBodies() const { return bodies; }
 }

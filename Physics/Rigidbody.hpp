@@ -37,7 +37,13 @@ namespace n2p{
 
         void AddTorque(const float torque);
 
+        void AddForceAtPoint(const Vector2& force, const Vector2& point);
+
         void Integrate(float dt);
+
+        void IntegratePosition(float dt);
+
+        void IntegrateVelocity(float dt);
 
         void ClearForces();
 

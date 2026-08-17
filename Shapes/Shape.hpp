@@ -8,8 +8,6 @@ namespace n2p{
     };
 
     class Shape {
-        private:
-            ShapeType type;
         public:
             virtual ~Shape() = default;
 

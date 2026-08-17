@@ -13,6 +13,6 @@ namespace n2p{
 
         void AddBody(Rigidbody* body);
 
-        const std::vector<Rigidbody*>& GetBodies() const;
+        const std::vector<Rigidbody*> GetBodies() const;
     };
 }

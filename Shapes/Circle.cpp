@@ -1,5 +1,4 @@
 #include "Circle.hpp"
-#include "Colour.hpp"
 
 namespace n2p{
     // Constructor
