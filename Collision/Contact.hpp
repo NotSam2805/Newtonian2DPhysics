@@ -24,4 +24,9 @@ namespace n2p{
 
         bool colliding;
     };
+
+    struct Projection{
+        float min;
+        float max;
+    };
 }

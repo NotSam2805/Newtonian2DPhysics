@@ -24,6 +24,7 @@ namespace n2p{
         // Give the vector rotated around an origin, rotation given in radians clockwise
         Vector2 Rotate(float rotation, const Vector2& origin = Vector2::Zero()) const;
 
+        float Dot(const Vector2& other) const;
 
         // Operators
         Vector2 operator+(const Vector2& other) const;

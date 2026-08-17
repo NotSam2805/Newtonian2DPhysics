@@ -32,6 +32,9 @@ namespace n2p{
         y /= magnitude;
     }
 
+    float Vector2::Dot(const Vector2& other) const {
+        return (x * other.x) + (y * other.y);
+    }
     // Give the vector rotated around an origin, rotation given in radians clockwise
     Vector2 Vector2::Rotate(float rotation, const Vector2& origin) const{
         float c = std::cos(rotation);
