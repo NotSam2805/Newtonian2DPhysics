@@ -34,27 +34,51 @@ namespace n2p{
         return std::min(a.max, b.max) - std::max(a.min, b.min);
     }
 
-    AABB CollisionDetector::GetAABB(const Transform& transform, const Circle* shape){
-        Vector2 extent(shape->GetRadius(), shape->GetRadius());
+    AABB CollisionDetector::GetAABB(const Transform& transform, const Circle& shape){
+        Vector2 extent(shape.GetRadius(), shape.GetRadius());
 
         return AABB(transform.position - extent, transform.position + extent);
     }
 
-    AABB CollisionDetector::GetAABB(const Transform& transform, const Polygon* shape){
-        // TODO
+    AABB CollisionDetector::GetAABB(const Transform& transform, const Polygon& shape){
+        size_t vertexCount = shape.GetVertexCount();
+        AABB box(
+            Vector2(std::numeric_limits<float>::max(), std::numeric_limits<float>::max()),
+            Vector2(-std::numeric_limits<float>::max(), -std::numeric_limits<float>::max())
+        );
+
+        for (size_t i = 0; i < vertexCount; ++i){
+            Vector2 vertex = shape.GetWorldVertex(i, transform);
+
+            if (vertex.x < box.min.x){
+                box.min.x = vertex.x;
+            }
+            else if (vertex.x > box.max.x){
+                box.max.x = vertex.x;
+            }
+
+            if (vertex.y < box.min.y){
+                box.min.y = vertex.y;
+            }
+            else if (vertex.y > box.max.y){
+                box.max.y = vertex.y;
+            }
+        }
+
+        return box;
     }
 
-    AABB CollisionDetector::GetAABB(const Transform& transform, const Shape* shape){
-        ShapeType type = shape->GetType();
+    AABB CollisionDetector::GetAABB(const Transform& transform, const Shape& shape){
+        ShapeType type = shape.GetType();
 
         switch (type)
         {
         case ShapeType::circle:
-            GetAABB(transform, static_cast<const Circle*>(shape));
+            return GetAABB(transform, static_cast<const Circle&>(shape));
             break;
         
         case ShapeType::polygon:
-            GetAABB(transform, static_cast<const Polygon*>(shape));
+            return GetAABB(transform, static_cast<const Polygon&>(shape));
             break;
         
         default:
@@ -62,18 +86,18 @@ namespace n2p{
         }
     }
 
-    std::vector<CollisionPair> CollisionDetector::BroadPhase(const std::vector<Rigidbody*> bodies) {
+    std::vector<CollisionPair> CollisionDetector::BroadPhase(const std::vector<Rigidbody*>& bodies) {
         std::vector<CollisionPair> potentialPairs;
 
         size_t nBodies = bodies.size();
 
         for(size_t i = 0; i < nBodies; ++i){
             Rigidbody* bodyA = bodies[i];
-            AABB boxA = GetAABB(bodyA->GetTransform(), bodyA->GetShape());
+            AABB boxA = GetAABB(bodyA->GetTransform(), *bodyA->GetShape());
 
             for(size_t j = i+1; j < nBodies; ++j){
                 Rigidbody* bodyB = bodies[j];
-                AABB boxB = GetAABB(bodyB->GetTransform(), bodyB->GetShape());
+                AABB boxB = GetAABB(bodyB->GetTransform(), *bodyB->GetShape());
 
                 if (boxA.Overlaps(boxB)){
                     potentialPairs.push_back(CollisionPair{bodyA, bodyB});
@@ -84,26 +108,23 @@ namespace n2p{
         return potentialPairs;
     }
 
-    bool CollisionDetector::CircleVCircle(const Rigidbody* circleBodyA, const Rigidbody* circleBodyB, Manifold* manifold){
-        const Circle* circleA = static_cast<const Circle*>(circleBodyA->GetShape());
-        const Circle* circleB = static_cast<const Circle*>(circleBodyB->GetShape());
+    bool CollisionDetector::CircleVCircle(const Rigidbody& circleBodyA, const Rigidbody& circleBodyB, Manifold& manifold){
+        const Circle* circleA = static_cast<const Circle*>(circleBodyA.GetShape());
+        const Circle* circleB = static_cast<const Circle*>(circleBodyB.GetShape());
 
-        Vector2 difference = circleBodyB->GetPosition() - circleBodyA->GetPosition();
+        Vector2 difference = circleBodyB.GetPosition() - circleBodyA.GetPosition();
 
         float radius = circleA->GetRadius() + circleB->GetRadius();
 
         float distanceSqrd = difference.MagnitudeSqrd();
 
         if (distanceSqrd < radius * radius){
-            manifold->normal = difference.Normalised();
-            manifold->penetration = std::sqrt(distanceSqrd);
-            manifold->contacts.push_back(
-                Contact{
-                    circleBodyA->GetPosition() + (difference.Normalised() * manifold->penetration),
-                    manifold->penetration
-                }
+            manifold.normal = difference.Normalised();
+            manifold.penetration = std::sqrt(distanceSqrd);
+            manifold.contacts.push_back(
+                circleBodyA.GetPosition() + (difference.Normalised() * manifold.penetration)
             );
-            manifold->colliding = true;
+            manifold.colliding = true;
 
             return true;
         }
@@ -111,9 +132,9 @@ namespace n2p{
         return false;
     }
 
-    bool CollisionDetector::PolyVCircle(const Rigidbody* polyBody, const Rigidbody* circleBody, Manifold* manifold){
-        const Polygon* poly = static_cast<const Polygon*>(polyBody->GetShape());
-        const Circle* circle = static_cast<const Circle*>(polyBody->GetShape());
+    bool CollisionDetector::PolyVCircle(const Rigidbody& polyBody, const Rigidbody& circleBody, Manifold& manifold){
+        const Polygon* poly = static_cast<const Polygon*>(polyBody.GetShape());
+        const Circle* circle = static_cast<const Circle*>(circleBody.GetShape());
 
         float minimumOverlap = std::numeric_limits<float>::max();
 
@@ -122,20 +143,23 @@ namespace n2p{
         size_t vertexCount = poly->GetVertexCount();
 
         for(size_t i = 0; i < vertexCount; ++i){
-            Vector2 a = poly->GetWorldVertex(i, polyBody->GetTransform());
-            Vector2 b = poly->GetWorldVertex((i + 1) % vertexCount, polyBody->GetTransform());
+            // Find edge, and normal to edge (axis)
+            Vector2 a = poly->GetWorldVertex(i, polyBody.GetTransform());
+            Vector2 b = poly->GetWorldVertex((i + 1) % vertexCount, polyBody.GetTransform());
 
             Vector2 edge = b - a;
 
             Vector2 axis = Vector2(-edge.y, edge.x).Normalised();
 
-            Projection polyProjection = ProjectPolygon(*poly, polyBody->GetTransform(), axis);
-            Projection circleProjection = ProjectCircle(*circle, circleBody->GetTransform(), axis);
+            // Project shapes to axis, check for overlap
+            Projection polyProjection = ProjectPolygon(*poly, polyBody.GetTransform(), axis);
+            Projection circleProjection = ProjectCircle(*circle, circleBody.GetTransform(), axis);
 
             if (!Overlap(polyProjection, circleProjection)){
                 return false;
             }
 
+            // Find the penetration, as the minimum overlap
             float overlap = GetOverlap(polyProjection, circleProjection);
             if (overlap < minimumOverlap){
                 minimumOverlap = overlap;
@@ -143,15 +167,15 @@ namespace n2p{
             }
         }
 
-
-        Vector2 circleCentre = circleBody->GetPosition();
+        // Check axis from closest vertex to circle
+        Vector2 circleCentre = circleBody.GetPosition();
 
         Vector2 closestVertex;
 
         float closestDistanceSqrd = std::numeric_limits<float>::max();
 
         for(size_t i = 0; i < vertexCount; ++i){
-            Vector2 vertex = poly->GetWorldVertex(i, polyBody->GetTransform());
+            Vector2 vertex = poly->GetWorldVertex(i, polyBody.GetTransform());
 
             Vector2 difference = vertex - circleCentre;
 
@@ -165,8 +189,8 @@ namespace n2p{
         Vector2 axis = closestVertex - circleCentre;
         axis.Normalise();
 
-        Projection circleProjection = ProjectCircle(*circle, circleBody->GetTransform(), axis);
-        Projection polyProjection = ProjectPolygon(*poly, polyBody->GetTransform(), axis);
+        Projection circleProjection = ProjectCircle(*circle, circleBody.GetTransform(), axis);
+        Projection polyProjection = ProjectPolygon(*poly, polyBody.GetTransform(), axis);
 
         if (!Overlap(circleProjection, polyProjection)){
             return false;
@@ -178,32 +202,115 @@ namespace n2p{
             collisionNormal = axis;
         }
 
-
-        Vector2 direction = polyBody->GetPosition() - circleBody->GetPosition();
+        /* Calculate manifold:
+         * - Determine direction of normal
+         * - Find contact point as point on circumference of circle
+         */
+        Vector2 direction = polyBody.GetPosition() - circleBody.GetPosition();
 
         if (direction.Dot(collisionNormal) < 0.0f){
             collisionNormal = -collisionNormal;
         }
 
-        manifold->normal = collisionNormal;
-        manifold->penetration = minimumOverlap;
-        manifold->contacts.push_back(
-            Contact{
-                circleBody->GetPosition() + (collisionNormal * circle->GetRadius()),
-                manifold->penetration
-            }
+        manifold.normal = collisionNormal;
+        manifold.penetration = minimumOverlap;
+        manifold.contacts.push_back(
+            circleBody.GetPosition() + (collisionNormal * circle->GetRadius())
         );
         
         return true;
     }
 
-    bool CollisionDetector::PolyVPoly(const Rigidbody* polyBody, const Rigidbody* circleBody, Manifold* manifold){
-        // TODO
+    bool CollisionDetector::PolyVPoly(const Rigidbody& bodyA, const Rigidbody& bodyB, Manifold& manifold){
+        const Polygon* polyA = static_cast<const Polygon*>(bodyA.GetShape());
+        const Polygon* polyB = static_cast<const Polygon*>(bodyB.GetShape());
+
+        float minimumOverlap = std::numeric_limits<float>::max();
+        Vector2 collisionNormal;
+        Vector2 refrenceEdge;
+        bool referenceIsA = true;
+
+        // Check all axis from edges from polyA
+        size_t vertexCount = polyA->GetVertexCount();
+
+        for (size_t i = 0; i < vertexCount; ++i){
+            Vector2 a = polyA->GetWorldVertex(i, bodyA.GetTransform());
+            Vector2 b = polyA->GetWorldVertex((i + 1) % vertexCount, bodyA.GetTransform());
+
+            Vector2 edge = b - a;
+            Vector2 axis(-edge.y, edge.x);
+            axis.Normalise();
+
+            Projection projectionA = ProjectPolygon(*polyA, bodyA.GetTransform(), axis);
+            Projection projectionB = ProjectPolygon(*polyB, bodyB.GetTransform(), axis);
+
+            if (!Overlap(projectionA, projectionB)){
+                return false;
+            }
+
+            float overlap = GetOverlap(projectionA, projectionB);
+
+            if (overlap < minimumOverlap){
+                minimumOverlap = overlap;
+                collisionNormal = axis;
+
+                refrenceEdge = edge;
+            }
+        }
+
+        // Repeat for polyB
+        vertexCount = polyB->GetVertexCount();
+
+        for (size_t i = 0; i < vertexCount; ++i){
+            Vector2 a = polyB->GetWorldVertex(i, bodyB.GetTransform());
+            Vector2 b = polyB->GetWorldVertex((i + 1) % vertexCount, bodyB.GetTransform());
+
+            Vector2 edge = b - a;
+            Vector2 axis(-edge.y, edge.x);
+            axis.Normalise();
+
+            Projection projectionA = ProjectPolygon(*polyA, bodyA.GetTransform(), axis);
+            Projection projectionB = ProjectPolygon(*polyB, bodyB.GetTransform(), axis);
+
+            if (!Overlap(projectionA, projectionB)){
+                return false;
+            }
+
+            float overlap = GetOverlap(projectionA, projectionB);
+
+            if (overlap < minimumOverlap){
+                minimumOverlap = overlap;
+                collisionNormal = axis;
+
+                refrenceEdge = edge;
+                referenceIsA = false;
+            }
+        }
+
+        /* Calculate manifold:
+         * - Determine direction of normal
+         * - Find contact points
+         *      + Use normal to find corresponding incident edge
+         *      + Clips incident edge along reference edge
+         * 
+         */
+
+        Vector2 direction = bodyB.GetPosition() - bodyA.GetPosition();
+
+        if (direction.Dot(collisionNormal) < 0.0f){
+            collisionNormal = -collisionNormal;
+        }
+
+        manifold.normal = collisionNormal;
+        manifold.penetration = minimumOverlap;
+
+        return true;
     }
 
-    bool CollisionDetector::DetectCollision(const Rigidbody* bodyA, const Rigidbody* bodyB, Manifold* manifold){
-        ShapeType typeA = bodyA->GetShape()->GetType();
-        ShapeType typeB = bodyB->GetShape()->GetType();
+    // Collsions for Polygons uses SAT - which only works for convex shapes
+    bool CollisionDetector::DetectCollision(const Rigidbody& bodyA, const Rigidbody& bodyB, Manifold& manifold){
+        ShapeType typeA = bodyA.GetShape()->GetType();
+        ShapeType typeB = bodyB.GetShape()->GetType();
 
         switch (typeA)
         {
@@ -248,7 +355,7 @@ namespace n2p{
         for(CollisionPair pair : potentialPairs){
             Manifold manifold;
             manifold.pair = pair;
-            if (DetectCollision(pair.bodyA, pair.bodyB, &manifold)){
+            if (DetectCollision(*pair.bodyA, *pair.bodyB, manifold)){
                 manifold.colliding = true;
                 manifolds.push_back(manifold);
             }
@@ -257,7 +364,7 @@ namespace n2p{
         return manifolds;
     }
 
-    std::vector<Manifold> CollisionDetector::DetectCollisions(const std::vector<Rigidbody*> bodies){
+    std::vector<Manifold> CollisionDetector::DetectCollisions(const std::vector<Rigidbody*>& bodies){
         std::vector<CollisionPair> potentialPairs = BroadPhase(bodies);
         return NarrowPhase(potentialPairs);
     }

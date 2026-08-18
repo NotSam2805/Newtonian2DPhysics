@@ -20,13 +20,8 @@ namespace n2p{
 
         float penetration;
 
-        std::vector<Contact> contacts;
+        std::vector<Vector2> contacts;
 
         bool colliding;
-    };
-
-    struct Projection{
-        float min;
-        float max;
     };
 }
