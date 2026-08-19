@@ -24,6 +24,27 @@ namespace n2p{
         }
     }
 
+    void Rigidbody::IntegratePosition (float dt) {
+        // Semi-implicit Euler
+        transform.position += velocity * dt;
+
+        transform.rotation += rotationalVelocity * dt;
+        transform.rotation = std::fmodf(transform.rotation, 2.0f * PI);
+    }
+
+    void Rigidbody::IntegrateVelocity (float dt) {
+        // Semi-implicit Euler
+        if (inverseMass != 0.0f){
+            Vector2 acceleration = accumulatedForces * inverseMass;
+            velocity += acceleration * dt;
+        }
+
+        if (inverseInertia != 0.0f){
+            float rotationalAcceleration = accumulatedTorque * inverseInertia;
+            rotationalVelocity += rotationalAcceleration * dt;
+        }
+    }
+
     void Rigidbody::ClearForces () {
         accumulatedForces = Vector2::Zero();
     }

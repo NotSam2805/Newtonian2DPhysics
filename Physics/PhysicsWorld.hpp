@@ -1,11 +1,13 @@
 #pragma once
 #include <vector>
 #include "Rigidbody.hpp"
+#include "../Collision/Collision.hpp"
 
 namespace n2p{
     class PhysicsWorld {
     private:
         std::vector<Rigidbody*> bodies;
+        CollisionDetector collisionDetector;
     public:
         PhysicsWorld();
         

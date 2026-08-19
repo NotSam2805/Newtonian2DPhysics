@@ -3,7 +3,7 @@
 
 namespace n2p{
     // Constructor
-    PhysicsWorld::PhysicsWorld() {}
+    PhysicsWorld::PhysicsWorld() : collisionDetector() {}
 
     void PhysicsWorld::Step(float dt) {
         /* 
@@ -13,9 +13,19 @@ namespace n2p{
         */
 
         for (Rigidbody* body : bodies){
-            body->Integrate(dt);
+            body->IntegrateVelocity(dt);
             body->ClearForces();
             body->ClearTorques();
+        }
+
+        std::vector<Manifold> collisionManifolds = collisionDetector.DetectCollisions(bodies);
+
+        for (Manifold& manifold : collisionManifolds){
+            // collisionSolver.Resolve(manifold)
+        }
+
+        for (Rigidbody* body : bodies){
+            body->IntegratePosition(dt);
         }
     }
 

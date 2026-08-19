@@ -18,9 +18,11 @@ namespace n2p{
             static bool Overlap(const Projection& a, const Projection& b);
             static float GetOverlap(const Projection& a, const Projection& b);
 
-            AABB GetAABB(const Transform& transform, const Circle& shape);
-            AABB GetAABB(const Transform& transform, const Polygon& shape);
-            AABB GetAABB(const Transform& transform, const Shape& shape);
+            static int ClipSegment(Vector2 out[2], const Vector2 in[2], const Vector2& normal, float offset);
+
+            static AABB GetAABB(const Transform& transform, const Circle& shape);
+            static AABB GetAABB(const Transform& transform, const Polygon& shape);
+            static AABB GetAABB(const Transform& transform, const Shape& shape);
 
             std::vector<CollisionPair> BroadPhase(const std::vector<Rigidbody*>& bodies);
             std::vector<Manifold> NarrowPhase(const std::vector<CollisionPair> potentialPairs);

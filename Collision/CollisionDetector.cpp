@@ -86,6 +86,36 @@ namespace n2p{
         }
     }
 
+    int CollisionDetector::ClipSegment(Vector2 out[2], const Vector2 in[2], const Vector2& normal, float offset)
+    {
+        int count = 0;
+
+        float distanceA = normal.Dot(in[0]) - offset;
+        
+        float distanceB = normal.Dot(in[1]) - offset;
+
+        // Point A is inside
+        if (distanceA <= 0.0f) {
+            out[count++] = in[0];
+        }
+
+        // Point B is inside
+        if (distanceB <= 0.0f) {
+            out[count++] = in[1];
+        }
+
+        // Segment crosses the plane
+        if ((distanceA < 0.0f && distanceB > 0.0f) || (distanceA > 0.0f && distanceB < 0.0f)) {
+            float t = distanceA / (distanceA - distanceB);
+            
+            Vector2 intersection = in[0] + (in[1] - in[0]) * t;
+
+            out[count++] = intersection;
+        }
+
+        return count;
+    }
+
     std::vector<CollisionPair> CollisionDetector::BroadPhase(const std::vector<Rigidbody*>& bodies) {
         std::vector<CollisionPair> potentialPairs;
 
@@ -227,7 +257,8 @@ namespace n2p{
 
         float minimumOverlap = std::numeric_limits<float>::max();
         Vector2 collisionNormal;
-        Vector2 refrenceEdge;
+        Vector2 referenceEdgeA;
+        Vector2 referenceEdgeB;
         bool referenceIsA = true;
 
         // Check all axis from edges from polyA
@@ -254,7 +285,8 @@ namespace n2p{
                 minimumOverlap = overlap;
                 collisionNormal = axis;
 
-                refrenceEdge = edge;
+                referenceEdgeA = a;
+                referenceEdgeB = b;
             }
         }
 
@@ -282,7 +314,8 @@ namespace n2p{
                 minimumOverlap = overlap;
                 collisionNormal = axis;
 
-                refrenceEdge = edge;
+                referenceEdgeA = a;
+                referenceEdgeB = b;
                 referenceIsA = false;
             }
         }
@@ -292,7 +325,6 @@ namespace n2p{
          * - Find contact points
          *      + Use normal to find corresponding incident edge
          *      + Clips incident edge along reference edge
-         * 
          */
 
         Vector2 direction = bodyB.GetPosition() - bodyA.GetPosition();
@@ -303,6 +335,73 @@ namespace n2p{
 
         manifold.normal = collisionNormal;
         manifold.penetration = minimumOverlap;
+
+        
+        const Polygon* referencePoly = referenceIsA ? polyA : polyB;
+        const Rigidbody& referenceBody = referenceIsA ? bodyA : bodyB;
+        const Polygon* incidentPoly = referenceIsA ? polyB : polyA;
+        const Rigidbody& incidentBody = referenceIsA ? bodyB : bodyA;
+
+        // Find the vertices of the incident edge by finding the edge on the incident object with the smallest dot from the collision normal
+        Vector2 incidentEdgeA;
+        Vector2 incidentEdgeB;
+        float dot = std::numeric_limits<float>::max();
+
+        vertexCount = incidentPoly->GetVertexCount();
+        for (size_t i = 0; i < vertexCount; ++i){
+            Vector2 a = incidentPoly->GetWorldVertex(i, incidentBody.GetTransform());
+            Vector2 b = incidentPoly->GetWorldVertex((i+1)%vertexCount, incidentBody.GetTransform());
+
+            Vector2 edge = b - a;
+            Vector2 edgeNormal = Vector2(-edge.y, edge.x).Normalised();
+
+            if (edgeNormal.Dot(collisionNormal) < dot){
+                incidentEdgeA = a;
+                incidentEdgeB = b;
+                dot = edgeNormal.Dot(collisionNormal);
+            }
+        }
+
+        /* Find points along reference edge that fall on incident edge by clipping.
+         * Normally 2 points, one at the "lowest" and one at the "highest".
+        */
+
+        Vector2 tangent = (referenceEdgeB - referenceEdgeA).Normalised();
+
+        Vector2 clipPoints[2] = {
+            incidentEdgeA,
+            incidentEdgeB
+        };
+
+        Vector2 output[2];
+
+        // Clip against first side of referenceEdge
+        int count = ClipSegment(output, clipPoints, -tangent, -tangent.Dot(referenceEdgeA));
+
+        if (count < 2) {
+            // No valid incident edge
+            return false;
+        }
+
+        // Clip against other side of referenceEdge
+        Vector2 clippedPoints[2];
+
+        count = ClipSegment(clippedPoints, output, tangent, tangent.Dot(referenceEdgeB));
+
+        if (count == 0){
+            // No valid edge
+            return false;
+        }
+
+        float referenceOffset = collisionNormal.Dot(referenceEdgeA);
+
+        for (int i = 0; i < count; ++i){
+            float seperation = collisionNormal.Dot(clippedPoints[i]);
+
+            if (seperation < 0.0f){
+                manifold.contacts.push_back(clippedPoints[i]);
+            }
+        }
 
         return true;
     }
