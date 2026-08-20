@@ -8,6 +8,8 @@ namespace n2p{
     private:
         std::vector<Rigidbody*> bodies;
     public:
+        Vector2 gravity = Vector2();
+
         PhysicsWorld();
         
         void Step(float dt);

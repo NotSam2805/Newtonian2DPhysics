@@ -13,6 +13,7 @@ namespace n2p{
         */
 
         for (Rigidbody* body : bodies){
+            body->AddForce(gravity * body->GetMass());
             body->IntegrateVelocity(dt);
             body->ClearForces();
             body->ClearTorques();
