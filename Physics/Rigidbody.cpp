@@ -71,6 +71,16 @@ namespace n2p{
         velocity += impulse * inverseMass;
     }
 
+    void Rigidbody::ApplyImpulse(const Vector2& impulse, const Vector2& point){
+        velocity += impulse * inverseMass;
+
+        Vector2 r = point - transform.position;
+
+        float torque = Vector2::Cross(r, impulse);
+
+        rotationalVelocity += torque * inverseInertia;
+    }
+
     // Getters
     const Vector2& Rigidbody::GetPosition() const { return transform.position; }
 
@@ -87,6 +97,8 @@ namespace n2p{
     const Shape* Rigidbody::GetShape() const { return shape.get(); }
 
     const Transform& Rigidbody::GetTransform() const{ return transform; }
+
+    float Rigidbody::GetInverseInertia() const { return inverseInertia; }
 
     // Setters
     void Rigidbody::SetPosition(const Vector2& position) { transform.position = position; }

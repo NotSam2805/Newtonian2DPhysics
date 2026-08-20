@@ -56,6 +56,8 @@ namespace n2p{
 
         void ApplyImpulse(const Vector2& impulse);
 
+        void ApplyImpulse(const Vector2& impulse, const Vector2& point);
+
         // Getters
         const Vector2& GetPosition() const;
 

@@ -35,6 +35,15 @@ namespace n2p{
     float Vector2::Dot(const Vector2& other) const {
         return (x * other.x) + (y * other.y);
     }
+
+    float Vector2::Cross(const Vector2& a, const Vector2& b){
+        return a.x * b.y - a.y * b.x;
+    }
+
+    Vector2 Vector2::Cross(float angularVelocity, const Vector2& r) {
+        return Vector2(-angularVelocity * r.y, angularVelocity * r.x);
+    }
+
     // Give the vector rotated around an origin, rotation given in radians clockwise
     Vector2 Vector2::Rotate(float rotation, const Vector2& origin) const{
         float c = std::cos(rotation);

@@ -26,6 +26,9 @@ namespace n2p{
 
         float Dot(const Vector2& other) const;
 
+        static float Cross(const Vector2& a, const Vector2& b);
+
+        static Vector2 Cross(float angularVelocity, const Vector2& r);
         // Operators
         Vector2 operator+(const Vector2& other) const;
 
