@@ -1,4 +1,6 @@
 #include "CollisionDetector.hpp"
+#include <limits>
+#include <cmath>
 
 namespace n2p{
 
@@ -84,6 +86,8 @@ namespace n2p{
         default:
             break;
         }
+
+        return AABB();
     }
 
     int CollisionDetector::ClipSegment(Vector2 out[2], const Vector2 in[2], const Vector2& normal, float offset)
@@ -116,6 +120,7 @@ namespace n2p{
         return count;
     }
 
+    // Uses AABB to find potential pairs
     std::vector<CollisionPair> CollisionDetector::BroadPhase(const std::vector<Rigidbody*>& bodies) {
         std::vector<CollisionPair> potentialPairs;
 

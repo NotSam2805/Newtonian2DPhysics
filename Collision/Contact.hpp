@@ -1,5 +1,6 @@
-#include "Maths/Maths.hpp"
-#include "Physics/Rigidbody.hpp"
+#pragma once
+#include "../Maths/Maths.hpp"
+#include "../Physics/Rigidbody.hpp"
 #include <vector>
 
 namespace n2p{

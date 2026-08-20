@@ -23,6 +23,9 @@ namespace n2p{
 
         std::unique_ptr<Shape> shape;
     public:
+        // Value from 0-1 which determines "bounciness"
+        float restitution;
+
         // Constructor
         explicit Rigidbody (
             float mass = 1.0f,
@@ -49,6 +52,10 @@ namespace n2p{
 
         void ClearTorques();
 
+        void Move(const Vector2& displacement);
+
+        void ApplyImpulse(const Vector2& impulse);
+
         // Getters
         const Vector2& GetPosition() const;
 
@@ -60,12 +67,17 @@ namespace n2p{
 
         float GetMass() const;
 
-        Shape* GetShape();
+        float GetInverseMass() const;
+
+        float GetInverseInertia() const;
+
         const Shape* GetShape() const;
 
         const Transform& GetTransform() const;
 
         // Setters
         void SetPosition(const Vector2& position);
+
+        void SetVelocity(const Vector2& velocity);
     };
 }

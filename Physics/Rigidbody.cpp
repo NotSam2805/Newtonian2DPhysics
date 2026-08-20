@@ -4,9 +4,11 @@
 
 namespace n2p{
     Rigidbody::Rigidbody (float mass, const Transform& transform, std::unique_ptr<Shape> shape, float inertia) :
-    mass(mass), inverseMass(mass > 0.0f ? 1.0f / mass : 0.0f), transform(transform), shape(std::move(shape)),
-    velocity(Vector2::Zero()), accumulatedForces(Vector2::Zero()), inertia(inertia), inverseInertia(inertia > 0.0f ? 1.0f / inertia : 0.0f),
-    accumulatedTorque(0.0f), rotationalVelocity(0.0f){}
+    mass(mass), inverseMass(mass > 0.0f ? 1.0f / mass : 0.0f),
+    transform(transform), shape(std::move(shape)),
+    velocity(Vector2::Zero()), accumulatedForces(Vector2::Zero()),
+    inertia(inertia), inverseInertia(inertia > 0.0f ? 1.0f / inertia : 0.0f), accumulatedTorque(0.0f), rotationalVelocity(0.0f),
+    restitution(0.9f) {}
 
     void Rigidbody::Integrate (float dt) {
         // Semi-implicit Euler
@@ -61,6 +63,14 @@ namespace n2p{
         accumulatedTorque += torque;
     }
 
+    void Rigidbody::Move(const Vector2& displacement){
+        transform.position += displacement;
+    }
+
+    void Rigidbody::ApplyImpulse(const Vector2& impulse){
+        velocity += impulse * inverseMass;
+    }
+
     // Getters
     const Vector2& Rigidbody::GetPosition() const { return transform.position; }
 
@@ -68,14 +78,18 @@ namespace n2p{
 
     float Rigidbody::GetMass() const { return mass; }
 
+    float Rigidbody::GetInverseMass() const { return inverseMass; }
+
     const float Rigidbody::GetRotationalVelocity() const{ return rotationalVelocity; }
 
     const float Rigidbody::GetRotation() const{ return transform.rotation; }
 
-    // Setters
-    void Rigidbody::SetPosition(const Vector2& position) { transform.position = position; }
-
     const Shape* Rigidbody::GetShape() const { return shape.get(); }
 
     const Transform& Rigidbody::GetTransform() const{ return transform; }
+
+    // Setters
+    void Rigidbody::SetPosition(const Vector2& position) { transform.position = position; }
+
+    void Rigidbody::SetVelocity(const Vector2& newVelocity) { velocity = newVelocity; }
 }

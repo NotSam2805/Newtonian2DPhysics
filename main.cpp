@@ -70,7 +70,7 @@ int main(int argc, char *argv[]){
     ball.AddForce(Vector2(-100.0f, 0.0f));
 
     // Make the square spin
-    square.AddTorque(100.0f);
+    //square.AddTorque(100.0f);
 
     while (running){
         auto deltatime = clock::now() - timestart;
