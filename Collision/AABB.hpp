@@ -9,6 +9,7 @@ namespace n2p{
         AABB() : min(Vector2()), max(Vector2()) {}
         AABB(const Vector2& min, const Vector2& max) : min(min), max(max) {}
 
+        // Returns true if the AABBs overlap
         bool Overlaps(const AABB& other) const
         {
             return

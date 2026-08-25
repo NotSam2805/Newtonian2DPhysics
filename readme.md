@@ -1,8 +1,28 @@
 # Newtonian Physics Simulation
-A complete, self contained, Physics Engine and Render Pipeline. All components should be kept as simple as possible (and limited to 2D).
+A complete, self contained, Physics Engine and Render Pipeline. This is meant to provide the foundation for future projects (game engine ect). Complete simple render pipeline, physics handling, collision detection and resolution, and maths tools for all these systems.
 
-# Structure
-Standard Physics Engine pipeline as follows:
-Apply Forces -> Detect Collisions -> Resolve Collisons -> Integrate Motion
+## Use
+See the [template](template.cpp) for simple use for running the physics engine and renderer at 60fps.
 
-The Renderer will run completely independantly, simply accessing the necessary positions from the Physics Engine to render the objects.
+## Structure
+
+## Maths
+### Constants
+### MathsUtils
+### Transform
+### Vector2
+
+## Physics
+### PhysicsWorld
+### Rigidbody
+
+## Rendering
+### Camera
+### Renderer
+
+## Shapes
+### Shape
+### Circle
+### Polygon
+### Colour
+### *Rect*
