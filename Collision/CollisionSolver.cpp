@@ -13,14 +13,15 @@ namespace n2p{
         float totalInverseMass = bodyA.GetInverseMass() + bodyB.GetInverseMass();
 
         // Positional correction
-        float correctionAmount = std::max((manifold.penetration - slop), 0.0f) * correctionPercent;
-        Vector2 correction = manifold.normal * (correctionAmount / totalInverseMass);
+        float correctionAmount = (manifold.penetration / totalInverseMass) * correctionPercent;
+        correctionAmount = correctionAmount < slop ? 0.0f : correctionAmount;
+        Vector2 correction = manifold.normal * correctionAmount;
 
         bodyA.Move(correction * bodyA.GetInverseMass());
         bodyB.Move(-correction * bodyB.GetInverseMass());
 
-        // Find restitution as max. Could also use average or multiplier.
-        float restitution = std::max(bodyA.restitution, bodyB.restitution);
+        // Find restitution as multiplier. Could also use average or max.
+        float restitution = bodyA.restitution * bodyB.restitution;
 
         // Resolve velocity for linear impulse
         /*

@@ -403,7 +403,7 @@ namespace n2p{
         for (int i = 0; i < count; ++i){
             float seperation = collisionNormal.Dot(clippedPoints[i]);
 
-            if (seperation < 0.0f){
+            if (seperation > 0.0f){
                 manifold.contacts.push_back(clippedPoints[i]);
             }
         }

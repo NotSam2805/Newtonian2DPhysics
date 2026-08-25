@@ -1,5 +1,7 @@
 #include <iostream>
 #include <memory>
+#include <vector>
+
 #include "Physics/Physics.hpp"
 #include "Rendering/Renderer.hpp"
 #include "Shapes/Shapes.hpp"
@@ -43,34 +45,58 @@ int main(int argc, char *argv[]){
     PhysicsWorld world{};
     Renderer renderer{800, 600, Camera{Vector2::Zero(), 10.0f}};
 
-    // Make a blue square
-    Rigidbody square(
-        1.0f, Transform{Vector2(-25.0f,0.0f)},
-        std::make_unique<Polygon>(std::vector{
-            new Vector2(-10.0f, 10.0f),
-            new Vector2(10.0f, 10.0f),
-            new Vector2(10.0f, -10.0f),
-            new Vector2(-10.0f, -10.0f)}, Colour{0,0,255,255}),
-        1.0f
+    Rigidbody wall(
+        0.0f,
+        Transform{Vector2(-25.0f, 0.0f), 0.0f},
+        std::make_unique<Polygon>(
+            std::vector<Vector2*> {
+                new Vector2(1.0f, 10.0f),
+                new Vector2(1.0f, -10.0f),
+                new Vector2(-1.0f,-10.0f),
+                new Vector2(-1.0f,10.0f)
+            },
+            Colour{200,200,200,255}
+        ),
+        0.0f
     );
-    
-    // Make a red ball
-    Rigidbody ball(
+    wall.restitution = 1.0f;
+    world.AddBody(&wall);
+
+    Rigidbody box1(
         1.0f,
-        Transform{Vector2(25.0f,0.0f)}, std::make_unique<Circle>(5.0f, n2p::Colour{255,0,0,SDL_ALPHA_OPAQUE}),
-        1.0f
+        Transform{Vector2(0.0f, 0.0f), 0.0f},
+        std::make_unique<Polygon>(
+            std::vector<Vector2*> {
+                new Vector2(1.0f, 1.0f),
+                new Vector2(1.0f, -1.0f),
+                new Vector2(-1.0f,-1.0f),
+                new Vector2(-1.0f,1.0f)
+            },
+            Colour{200,0,0,255}
+        ),
+        0.0f
     );
+    box1.restitution = 1.0f;
+    world.AddBody(&box1);
 
-    world.AddBody(&square);
-    world.AddBody(&ball);
+    Rigidbody box2(
+        100.0f,
+        Transform{Vector2(25.0f, 0.0f), 0.0f},
+        std::make_unique<Polygon>(
+            std::vector<Vector2*> {
+                new Vector2(5.0f, 5.0f),
+                new Vector2(5.0f, -5.0f),
+                new Vector2(-5.0f,-5.0f),
+                new Vector2(-5.0f,5.0f)
+            },
+            Colour{0,200,0,255}
+        ),
+        0.0f
+    );
+    box2.restitution = 1.0f;
+    world.AddBody(&box2);
 
-    // Add an rightwards force to the square
-    square.AddForce(Vector2(100.0f, 0.0f));
-    // Add a leftwards force to the ball
-    ball.AddForce(Vector2(-100.0f, 0.0f));
-
-    // Make the square spin
-    square.AddTorque(100.0f);
+    box2.ApplyImpulse(Vector2(-150.0f, 0.0f));
 
     while (running){
         auto deltatime = clock::now() - timestart;
