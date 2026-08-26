@@ -24,7 +24,9 @@ namespace n2p{
         std::unique_ptr<Shape> shape;
     public:
         // Value from 0-1 which determines "bounciness"
-        float restitution;
+        float restitution = 0.7f;
+        // Value from 0-1 which determines "slippiness"
+        float friction = 0.5f;
 
         // Constructor
         explicit Rigidbody (
@@ -57,6 +59,8 @@ namespace n2p{
         void ApplyImpulse(const Vector2& impulse);
 
         void ApplyImpulse(const Vector2& impulse, const Vector2& point);
+
+        Vector2 GetVelocityAtPoint(const Vector2& point) const;
 
         // Getters
         const Vector2& GetPosition() const;

@@ -45,22 +45,22 @@ int main(int argc, char *argv[]){
     PhysicsWorld world{};
     Renderer renderer{800, 600, Camera{Vector2::Zero(), 10.0f}};
 
-    Rigidbody wall(
+    Rigidbody floor(
         0.0f,
-        Transform{Vector2(-25.0f, 0.0f), 0.0f},
+        Transform{Vector2(0.0f, -25.0f), 0.0f},
         std::make_unique<Polygon>(
             std::vector<Vector2*> {
-                new Vector2(1.0f, 10.0f),
-                new Vector2(1.0f, -10.0f),
-                new Vector2(-1.0f,-10.0f),
-                new Vector2(-1.0f,10.0f)
+                new Vector2(100.0f, 1.0f),
+                new Vector2(100.0f, -1.0f),
+                new Vector2(-100.0f,-1.0f),
+                new Vector2(-100.0f,1.0f)
             },
             Colour{200,200,200,255}
         ),
         0.0f
     );
-    wall.restitution = 1.0f;
-    world.AddBody(&wall);
+    floor.restitution = 0.9f;
+    world.AddBody(&floor);
 
     Rigidbody box1(
         1.0f,
@@ -74,13 +74,13 @@ int main(int argc, char *argv[]){
             },
             Colour{200,0,0,255}
         ),
-        0.0f
+        1.0f
     );
-    box1.restitution = 1.0f;
+    box1.restitution = 0.9f;
     world.AddBody(&box1);
 
     Rigidbody box2(
-        100.0f,
+        25.0f,
         Transform{Vector2(25.0f, 0.0f), 0.0f},
         std::make_unique<Polygon>(
             std::vector<Vector2*> {
@@ -91,12 +91,12 @@ int main(int argc, char *argv[]){
             },
             Colour{0,200,0,255}
         ),
-        0.0f
+        25.0f
     );
-    box2.restitution = 1.0f;
-    world.AddBody(&box2);
+    box2.restitution = 0.9f;
+    //world.AddBody(&box2);
 
-    box2.ApplyImpulse(Vector2(-150.0f, 0.0f));
+    world.gravity = Vector2(0.0f, -9.8f);
 
     while (running){
         auto deltatime = clock::now() - timestart;

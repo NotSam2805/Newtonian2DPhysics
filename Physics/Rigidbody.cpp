@@ -7,8 +7,8 @@ namespace n2p{
     mass(mass), inverseMass(mass > 0.0f ? 1.0f / mass : 0.0f),
     transform(transform), shape(std::move(shape)),
     velocity(Vector2::Zero()), accumulatedForces(Vector2::Zero()),
-    inertia(inertia), inverseInertia(inertia > 0.0f ? 1.0f / inertia : 0.0f), accumulatedTorque(0.0f), rotationalVelocity(0.0f),
-    restitution(0.9f) {}
+    inertia(inertia), inverseInertia(inertia > 0.0f ? 1.0f / inertia : 0.0f), accumulatedTorque(0.0f), rotationalVelocity(0.0f)
+    {}
 
     void Rigidbody::Integrate (float dt) {
         // Semi-implicit Euler
@@ -79,6 +79,11 @@ namespace n2p{
         float torque = Vector2::Cross(r, impulse);
 
         rotationalVelocity += torque * inverseInertia;
+    }
+
+    Vector2 Rigidbody::GetVelocityAtPoint(const Vector2& point) const {
+        Vector2 r = point - transform.position;
+        return velocity + Vector2::Cross(rotationalVelocity, r);
     }
 
     // Getters
