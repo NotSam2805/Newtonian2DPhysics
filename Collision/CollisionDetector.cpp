@@ -157,7 +157,7 @@ namespace n2p{
             manifold.normal = difference.Normalised();
             manifold.penetration = std::sqrt(distanceSqrd);
             manifold.contacts.push_back(
-                circleBodyA.GetPosition() + (difference.Normalised() * manifold.penetration)
+                Contact{circleBodyA.GetPosition() + (difference.Normalised() * manifold.penetration)}
             );
             manifold.colliding = true;
 
@@ -250,7 +250,7 @@ namespace n2p{
         manifold.normal = collisionNormal;
         manifold.penetration = minimumOverlap;
         manifold.contacts.push_back(
-            circleBody.GetPosition() + (collisionNormal * circle->GetRadius())
+            Contact{circleBody.GetPosition() + (collisionNormal * circle->GetRadius())}
         );
         
         return true;
@@ -404,7 +404,7 @@ namespace n2p{
             float seperation = collisionNormal.Dot(clippedPoints[i]);
 
             if (seperation > 0.0f){
-                manifold.contacts.push_back(clippedPoints[i]);
+                manifold.contacts.push_back(Contact{clippedPoints[i]});
             }
         }
 

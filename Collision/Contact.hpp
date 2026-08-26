@@ -11,7 +11,8 @@ namespace n2p{
 
     struct Contact {
         Vector2 point;
-        float penetration;
+        float normalImpulse = 0.0f;
+        float frictionImpulse = 0.0f;
     };
 
     struct Manifold {
@@ -21,7 +22,7 @@ namespace n2p{
 
         float penetration;
 
-        std::vector<Vector2> contacts;
+        std::vector<Contact> contacts;
 
         bool colliding;
     };

@@ -1,10 +1,9 @@
 #include "CollisionSolver.hpp"
 #include <algorithm>
 #include <cmath>
-#include <iostream>
 
 namespace n2p{
-    void CollisionSolver::ResolveCollision(const Manifold& manifold){
+    void CollisionSolver::ResolveCollision(Manifold& manifold){
         if (!manifold.colliding){
             return;
         }
@@ -27,14 +26,16 @@ namespace n2p{
         float restitution = bodyA.restitution * bodyB.restitution;
 
         // Resolve velocity for impulse at contact point
-        std::cout << "Collision" << "\n";
-        for (const Vector2& contact : manifold.contacts){
-            Vector2 rA = contact - bodyA.GetPosition();
-            Vector2 rB = contact - bodyB.GetPosition();
+        size_t nContacts = manifold.contacts.size();
+        for (size_t i = 0; i < nContacts; ++i){
+            Contact& contact = manifold.contacts[i];
+
+            Vector2 rA = contact.point - bodyA.GetPosition();
+            Vector2 rB = contact.point - bodyB.GetPosition();
 
             // Velocity at contact
-            Vector2 velocityA = bodyA.GetVelocityAtPoint(contact);
-            Vector2 velocityB = bodyB.GetVelocityAtPoint(contact);
+            Vector2 velocityA = bodyA.GetVelocityAtPoint(contact.point);
+            Vector2 velocityB = bodyB.GetVelocityAtPoint(contact.point);
 
             Vector2 relativeVelocity = velocityB - velocityA;
 
@@ -66,17 +67,24 @@ namespace n2p{
 
             Vector2 normalImpulse = manifold.normal * impulseMagnitude;
 
-            std::cout << "Normal: " << normalImpulse << "\n";
+            contact.normalImpulse = impulseMagnitude;
 
-            bodyA.ApplyImpulse(-normalImpulse, contact);
-            bodyB.ApplyImpulse(normalImpulse, contact);
+            bodyA.ApplyImpulse(-normalImpulse, contact.point);
+            bodyB.ApplyImpulse(normalImpulse, contact.point);
+        }
 
+
+        for (size_t i = 0; i < nContacts; ++i){
+            Contact& contact = manifold.contacts[i];
+
+            Vector2 rA = contact.point - bodyA.GetPosition();
+            Vector2 rB = contact.point - bodyB.GetPosition();
 
             // Velocity at contact needs to be recalculated as normal impulse will have changed it
-            velocityA = bodyA.GetVelocityAtPoint(contact);
-            velocityB = bodyB.GetVelocityAtPoint(contact);
+            Vector2 velocityA = bodyA.GetVelocityAtPoint(contact.point);
+            Vector2 velocityB = bodyB.GetVelocityAtPoint(contact.point);
 
-            relativeVelocity = velocityB - velocityA;
+            Vector2 relativeVelocity = velocityB - velocityA;
 
             // Find imulse due to friction
             Vector2 tangent = relativeVelocity - (manifold.normal * relativeVelocity.Dot(manifold.normal));
@@ -98,7 +106,7 @@ namespace n2p{
 
             float frictionMagnitude = -velocityAlongTangent / frictionDenominator;
 
-            float maxFriction = std::sqrt(bodyA.friction * bodyB.friction) * impulseMagnitude;
+            float maxFriction = std::sqrt(bodyA.friction * bodyB.friction) * contact.normalImpulse;
 
             frictionMagnitude = std::clamp(frictionMagnitude, maxFriction, -maxFriction);
 
@@ -109,10 +117,10 @@ namespace n2p{
 
             Vector2 friction = tangent * frictionMagnitude;
 
-            std::cout << "Friction: " << friction << "\n";
+            contact.frictionImpulse = frictionMagnitude;
 
-            bodyA.ApplyImpulse(-friction, contact);
-            bodyB.ApplyImpulse(friction, contact);
+            bodyA.ApplyImpulse(-friction, contact.point);
+            bodyB.ApplyImpulse(friction, contact.point);
         }
     }
 }
