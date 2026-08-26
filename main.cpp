@@ -60,28 +60,29 @@ int main(int argc, char *argv[]){
         0.0f
     );
     floor.restitution = 0.9f;
+    floor.friction = 1.0f;
     world.AddBody(&floor);
 
     Rigidbody box1(
-        1.0f,
-        Transform{Vector2(0.0f, 0.0f), 0.0f},
+        2.0f,
+        Transform{Vector2(0.0f, -10.0f), 0.0f},
         std::make_unique<Polygon>(
             std::vector<Vector2*> {
-                new Vector2(1.0f, 1.0f),
-                new Vector2(1.0f, -1.0f),
-                new Vector2(-1.0f,-1.0f),
-                new Vector2(-1.0f,1.0f)
+                new Vector2(2.0f, 2.0f),
+                new Vector2(2.0f, -2.0f),
+                new Vector2(-2.0f,-2.0f),
+                new Vector2(-2.0f,2.0f)
             },
             Colour{200,0,0,255}
         ),
-        1.0f
+        2.0f
     );
-    box1.restitution = 0.9f;
+    box1.restitution = 0.5f;
     world.AddBody(&box1);
 
     Rigidbody box2(
-        25.0f,
-        Transform{Vector2(25.0f, 0.0f), 0.0f},
+        5.0f,
+        Transform{Vector2(5.0f, 0.0f), 0.0f},
         std::make_unique<Polygon>(
             std::vector<Vector2*> {
                 new Vector2(5.0f, 5.0f),
@@ -91,10 +92,10 @@ int main(int argc, char *argv[]){
             },
             Colour{0,200,0,255}
         ),
-        25.0f
+        5.0f
     );
-    box2.restitution = 0.9f;
-    //world.AddBody(&box2);
+    box2.restitution = 0.5f;
+    world.AddBody(&box2);
 
     world.gravity = Vector2(0.0f, -9.8f);
 

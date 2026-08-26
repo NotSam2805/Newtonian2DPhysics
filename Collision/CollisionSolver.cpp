@@ -1,6 +1,7 @@
 #include "CollisionSolver.hpp"
 #include <algorithm>
 #include <cmath>
+//#include <iostream>
 
 namespace n2p{
     void CollisionSolver::ResolveCollision(Manifold& manifold){
@@ -65,15 +66,10 @@ namespace n2p{
                 impulseMagnitude = 0.0f;
             }
 
-            Vector2 normalImpulse = manifold.normal * impulseMagnitude;
-
             contact.normalImpulse = impulseMagnitude;
-
-            bodyA.ApplyImpulse(-normalImpulse, contact.point);
-            bodyB.ApplyImpulse(normalImpulse, contact.point);
         }
 
-
+        // Resolve for friction
         for (size_t i = 0; i < nContacts; ++i){
             Contact& contact = manifold.contacts[i];
 
@@ -115,12 +111,25 @@ namespace n2p{
                 frictionMagnitude = 0.0f;
             }
 
-            Vector2 friction = tangent * frictionMagnitude;
-
             contact.frictionImpulse = frictionMagnitude;
+            contact.tangent = tangent;
+        }
+
+        for (size_t i = 0; i < nContacts; ++i){
+            Contact& contact = manifold.contacts[i];
+
+            Vector2 normalImpulse = manifold.normal * contact.normalImpulse;
+
+            bodyA.ApplyImpulse(-normalImpulse, contact.point);
+            bodyB.ApplyImpulse(normalImpulse, contact.point);
+
+            Vector2 friction = contact.tangent * contact.frictionImpulse;
 
             bodyA.ApplyImpulse(-friction, contact.point);
             bodyB.ApplyImpulse(friction, contact.point);
+
+            // For debug:
+            //std::cout<< "Normal: " << normalImpulse << " | Friction: " << friction << " @ " << contact.point << "\n";
         }
     }
 }
