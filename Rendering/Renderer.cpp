@@ -1,4 +1,5 @@
 #include "Renderer.hpp"
+#include <vector>
 
 namespace n2p{
     
@@ -142,6 +143,10 @@ namespace n2p{
         SDL_SetRenderDrawColor(renderer, shape->colour.red, shape->colour.green, shape->colour.blue, shape->colour.alpha);
 
         int count = shape->GetVertexCount();
+
+        std::vector<SDL_Vertex> vertices;
+        vertices.reserve(count);
+
         for (size_t i = 0; i < count; ++i){
             Vector2 aWorld = shape->GetWorldVertex(i, transform);// Bug on this line
             Vector2 bWorld = shape->GetWorldVertex((i + 1) % count, transform);
@@ -149,7 +154,27 @@ namespace n2p{
             Vector2 a = WorldToScreen(aWorld);
             Vector2 b = WorldToScreen(bWorld);
             
+            // Draw the edge
             SDL_RenderDrawLine(renderer, a.x, a.y, b.x, b.y);
+
+            // Get the vertex to draw triangles from
+            SDL_Vertex vertex{};
+            vertex.color = {shape->colour.red, shape->colour.green, shape->colour.blue, shape->colour.alpha};
+            vertex.position.x = a.x;
+            vertex.position.y = a.y;
+
+            vertices.push_back(vertex);
+        }
+
+        // Triangle fan
+        for (int i = 1; i < count -1; ++i){
+            SDL_Vertex triangle[3] = {
+                vertices[0],
+                vertices[i],
+                vertices[i+1]
+            };
+
+            SDL_RenderGeometry(renderer, nullptr, triangle, 3, nullptr, 0);
         }
     }
 
