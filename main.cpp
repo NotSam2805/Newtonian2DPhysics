@@ -65,7 +65,7 @@ int main(int argc, char *argv[]){
 
     Rigidbody box1(
         1.0f,
-        Transform{Vector2(-10.0f, -10.0f), 0.0f},
+        Transform{Vector2(0.0f, 0.0f), 0.0f},
         std::make_unique<Polygon>(
             std::vector<Vector2*> {
                 new Vector2(2.0f, 2.0f),
@@ -97,10 +97,9 @@ int main(int argc, char *argv[]){
     );
     box2.restitution = 1.0f;
     box2.friction = 1.0f;
-    //world.AddBody(&box2);
+    world.AddBody(&box2);
 
-    world.gravity = Vector2(0.0f, -10.0f);
-    box1.ApplyImpulse(Vector2(1.0f, 0.0f));
+    world.gravity = Vector2(0.0f, -9.8f);
 
     while (running){
         auto deltatime = clock::now() - timestart;
