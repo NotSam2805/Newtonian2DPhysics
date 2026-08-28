@@ -286,7 +286,7 @@ namespace n2p{
 
             float overlap = GetOverlap(projectionA, projectionB);
 
-            if (overlap < minimumOverlap){
+            if (overlap <= minimumOverlap){
                 minimumOverlap = overlap;
                 collisionNormal = axis;
 
@@ -315,7 +315,7 @@ namespace n2p{
 
             float overlap = GetOverlap(projectionA, projectionB);
 
-            if (overlap < minimumOverlap){
+            if (overlap <= minimumOverlap){
                 minimumOverlap = overlap;
                 collisionNormal = axis;
 

@@ -155,7 +155,7 @@ namespace n2p{
 
         for (int i = 0; i < iterations; ++i){
             SolveNormal(manifold);
-            //SolveTangent(manifold);
+            SolveTangent(manifold);
         }
     }
 }
