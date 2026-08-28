@@ -13,7 +13,7 @@ namespace n2p{
         Vector2 point;
         float normalImpulse = 0.0f;
         float frictionImpulse = 0.0f;
-        Vector2 tangent = Vector2::Zero();
+        float targetVelocity = 0.0f;
     };
 
     struct Manifold {

@@ -59,13 +59,13 @@ int main(int argc, char *argv[]){
         ),
         0.0f
     );
-    floor.restitution = 0.9f;
+    floor.restitution = 0.5f;
     floor.friction = 1.0f;
     world.AddBody(&floor);
 
     Rigidbody box1(
-        2.0f,
-        Transform{Vector2(0.0f, -10.0f), 0.0f},
+        1.0f,
+        Transform{Vector2(-10.0f, -10.0f), 0.0f},
         std::make_unique<Polygon>(
             std::vector<Vector2*> {
                 new Vector2(2.0f, 2.0f),
@@ -75,14 +75,15 @@ int main(int argc, char *argv[]){
             },
             Colour{200,0,0,255}
         ),
-        2.0f
+        1.0f
     );
-    box1.restitution = 0.5f;
+    box1.restitution = 1.0f;
+    box1.friction = 1.0f;
     world.AddBody(&box1);
 
     Rigidbody box2(
         5.0f,
-        Transform{Vector2(5.0f, 0.0f), 0.0f},
+        Transform{Vector2(2.0f, 10.0f), 0.0f},
         std::make_unique<Polygon>(
             std::vector<Vector2*> {
                 new Vector2(5.0f, 5.0f),
@@ -94,10 +95,12 @@ int main(int argc, char *argv[]){
         ),
         5.0f
     );
-    box2.restitution = 0.5f;
-    world.AddBody(&box2);
+    box2.restitution = 1.0f;
+    box2.friction = 1.0f;
+    //world.AddBody(&box2);
 
-    world.gravity = Vector2(0.0f, -9.8f);
+    world.gravity = Vector2(0.0f, -10.0f);
+    box1.ApplyImpulse(Vector2(1.0f, 0.0f));
 
     while (running){
         auto deltatime = clock::now() - timestart;

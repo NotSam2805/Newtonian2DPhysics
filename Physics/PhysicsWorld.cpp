@@ -22,7 +22,7 @@ namespace n2p{
         std::vector<Manifold> collisionManifolds = CollisionDetector::DetectCollisions(bodies);
 
         for (Manifold& manifold : collisionManifolds){
-            CollisionSolver::ResolveCollision(manifold);
+            CollisionSolver::SolveCollision(manifold);
         }
 
         for (Rigidbody* body : bodies){

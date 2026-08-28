@@ -9,6 +9,12 @@ namespace n2p{
             static constexpr float correctionPercent = 0.8f;
             static constexpr float impulseSlop = 0.1f;
 
-            static void ResolveCollision(Manifold& manifold);
+            static constexpr unsigned int iterations = 10;
+
+            static void CorrectPosition(const Manifold& manifold);
+            static void FindTargetVelocities(Manifold& manifold);
+            static void SolveNormal(Manifold& manifold);
+            static void SolveTangent(Manifold& manifold);
+            static void SolveCollision(Manifold& manifold);
     };
 }

@@ -334,7 +334,7 @@ namespace n2p{
 
         Vector2 direction = bodyB.GetPosition() - bodyA.GetPosition();
 
-        if (direction.Dot(collisionNormal) < 0.0f){
+        if (direction.Dot(collisionNormal) > 0.0f){
             collisionNormal = -collisionNormal;
         }
 
@@ -346,6 +346,8 @@ namespace n2p{
         const Rigidbody& referenceBody = referenceIsA ? bodyA : bodyB;
         const Polygon* incidentPoly = referenceIsA ? polyB : polyA;
         const Rigidbody& incidentBody = referenceIsA ? bodyB : bodyA;
+
+        Vector2 referenceNormal = referenceIsA ? -collisionNormal : collisionNormal;
 
         // Find the vertices of the incident edge by finding the edge on the incident object with the smallest dot from the collision normal
         Vector2 incidentEdgeA;
@@ -360,10 +362,10 @@ namespace n2p{
             Vector2 edge = b - a;
             Vector2 edgeNormal = Vector2(-edge.y, edge.x).Normalised();
 
-            if (edgeNormal.Dot(collisionNormal) < dot){
+            if (edgeNormal.Dot(referenceNormal) <= dot){
                 incidentEdgeA = a;
                 incidentEdgeB = b;
-                dot = edgeNormal.Dot(collisionNormal);
+                dot = edgeNormal.Dot(referenceNormal);
             }
         }
 
@@ -398,12 +400,12 @@ namespace n2p{
             return false;
         }
 
-        float referenceOffset = collisionNormal.Dot(referenceEdgeA);
+        float referenceOffset = referenceNormal.Dot(referenceEdgeA);
 
         for (int i = 0; i < count; ++i){
-            float seperation = collisionNormal.Dot(clippedPoints[i]);
+            float seperation = referenceNormal.Dot(clippedPoints[i]) - referenceOffset;
 
-            if (seperation > 0.0f){
+            if (seperation <= 0.0f){
                 manifold.contacts.push_back(Contact{clippedPoints[i]});
             }
         }

@@ -1,14 +1,10 @@
 #include "CollisionSolver.hpp"
 #include <algorithm>
 #include <cmath>
-//#include <iostream>
 
 namespace n2p{
-    void CollisionSolver::ResolveCollision(Manifold& manifold){
-        if (!manifold.colliding){
-            return;
-        }
 
+    void CollisionSolver::CorrectPosition(const Manifold& manifold){
         Rigidbody& bodyA = *manifold.pair.bodyA;
         Rigidbody& bodyB = *manifold.pair.bodyB;
 
@@ -20,12 +16,32 @@ namespace n2p{
         correctionAmount = correctionAmount < slop ? 0.0f : correctionAmount;
         Vector2 correction = manifold.normal * correctionAmount;
 
-        bodyA.Move(correction * bodyA.GetInverseMass());
-        bodyB.Move(-correction * bodyB.GetInverseMass());
+        bodyA.Move(-correction * bodyA.GetInverseMass());
+        bodyB.Move(correction * bodyB.GetInverseMass());
+    }
 
-        // Find restitution as multiplier. Could also use average or max.
+    void CollisionSolver::FindTargetVelocities(Manifold& manifold){
+        Rigidbody& bodyA = *manifold.pair.bodyA;
+        Rigidbody& bodyB = *manifold.pair.bodyB;
+
         float restitution = bodyA.restitution * bodyB.restitution;
 
+        size_t nContacts = manifold.contacts.size();
+        for (size_t i = 0; i < nContacts; ++i){
+            Contact& contact = manifold.contacts[i];
+
+            Vector2 relativeV = bodyB.GetVelocityAtPoint(contact.point) - bodyA.GetVelocityAtPoint(contact.point);
+
+            float normalV = relativeV.Dot(manifold.normal);
+
+            contact.targetVelocity = -normalV * restitution;
+        }
+    }
+
+    void CollisionSolver::SolveNormal(Manifold& manifold){
+        Rigidbody& bodyA = *manifold.pair.bodyA;
+        Rigidbody& bodyB = *manifold.pair.bodyB;
+        
         // Resolve velocity for impulse at contact point
         size_t nContacts = manifold.contacts.size();
         for (size_t i = 0; i < nContacts; ++i){
@@ -42,11 +58,6 @@ namespace n2p{
 
             float normalVelocity = relativeVelocity.Dot(manifold.normal);
 
-            // Already seperating
-            if (normalVelocity < 0.0f){
-                continue;
-            }
-
             float raCrossN = Vector2::Cross(rA, manifold.normal);
             float rbCrossN = Vector2::Cross(rB, manifold.normal);
 
@@ -58,25 +69,42 @@ namespace n2p{
                 continue;
             }
 
-            float impulseMagnitude = -(1.0f + restitution) * normalVelocity;
-            impulseMagnitude /= denominator;
+            float deltaImpulse = (contact.targetVelocity - normalVelocity) / denominator;
+            
+            float newImpulse = contact.normalImpulse + deltaImpulse;
 
-            if (impulseMagnitude < impulseSlop && -impulseSlop < impulseMagnitude){
-                // Avoid jitter
-                impulseMagnitude = 0.0f;
+            // Impulse cannot be negative, this would cause collisions to pull bodies together
+            newImpulse = std::max(newImpulse, 0.0f);
+
+            float impulseChange = newImpulse - contact.normalImpulse;
+
+            contact.normalImpulse = newImpulse;
+
+            if(impulseChange < impulseSlop){
+                continue;
             }
 
-            contact.normalImpulse = impulseMagnitude;
-        }
+            // Only apply the change
+            Vector2 impulse = manifold.normal * impulseChange;
 
-        // Resolve for friction
+            bodyA.ApplyImpulse(-impulse, contact.point);
+            bodyB.ApplyImpulse(impulse, contact.point);
+        }
+    }
+
+    void CollisionSolver::SolveTangent(Manifold& manifold){
+        // Solve for friction
+        Rigidbody& bodyA = *manifold.pair.bodyA;
+        Rigidbody& bodyB = *manifold.pair.bodyB;
+
+        size_t nContacts = manifold.contacts.size();
         for (size_t i = 0; i < nContacts; ++i){
             Contact& contact = manifold.contacts[i];
 
             Vector2 rA = contact.point - bodyA.GetPosition();
             Vector2 rB = contact.point - bodyB.GetPosition();
 
-            // Velocity at contact needs to be recalculated as normal impulse will have changed it
+            // Velocity at contact
             Vector2 velocityA = bodyA.GetVelocityAtPoint(contact.point);
             Vector2 velocityB = bodyB.GetVelocityAtPoint(contact.point);
 
@@ -100,36 +128,34 @@ namespace n2p{
                 (raCrossT * raCrossT * bodyA.GetInverseInertia()) +
                 (rbCrossT * rbCrossT * bodyB.GetInverseInertia());
 
-            float frictionMagnitude = -velocityAlongTangent / frictionDenominator;
+            float frictionDelta = -velocityAlongTangent / frictionDenominator;
 
             float maxFriction = std::sqrt(bodyA.friction * bodyB.friction) * contact.normalImpulse;
 
-            frictionMagnitude = std::clamp(frictionMagnitude, maxFriction, -maxFriction);
+            frictionDelta = std::clamp(frictionDelta, -maxFriction, maxFriction);
 
-            if (frictionMagnitude < impulseSlop && -impulseSlop < frictionMagnitude){
-                // Avoid jitter
-                frictionMagnitude = 0.0f;
-            }
+            
+            contact.frictionImpulse += frictionDelta;
 
-            contact.frictionImpulse = frictionMagnitude;
-            contact.tangent = tangent;
+            Vector2 impulse = tangent * frictionDelta;
+
+            bodyA.ApplyImpulse(-impulse, contact.point);
+            bodyB.ApplyImpulse(impulse, contact.point);
+        }
+    }
+
+    void CollisionSolver::SolveCollision(Manifold& manifold){
+        if (!manifold.colliding){
+            return;
         }
 
-        for (size_t i = 0; i < nContacts; ++i){
-            Contact& contact = manifold.contacts[i];
+        CorrectPosition(manifold);
 
-            Vector2 normalImpulse = manifold.normal * contact.normalImpulse;
+        FindTargetVelocities(manifold);
 
-            bodyA.ApplyImpulse(-normalImpulse, contact.point);
-            bodyB.ApplyImpulse(normalImpulse, contact.point);
-
-            Vector2 friction = contact.tangent * contact.frictionImpulse;
-
-            bodyA.ApplyImpulse(-friction, contact.point);
-            bodyB.ApplyImpulse(friction, contact.point);
-
-            // For debug:
-            //std::cout<< "Normal: " << normalImpulse << " | Friction: " << friction << " @ " << contact.point << "\n";
+        for (int i = 0; i < iterations; ++i){
+            SolveNormal(manifold);
+            //SolveTangent(manifold);
         }
     }
 }
