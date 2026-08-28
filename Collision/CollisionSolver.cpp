@@ -80,7 +80,7 @@ namespace n2p{
 
             contact.normalImpulse = newImpulse;
 
-            if(impulseChange < impulseSlop){
+            if(std::abs(impulseChange) < impulseSlop){
                 continue;
             }
 
@@ -136,6 +136,10 @@ namespace n2p{
 
             
             contact.frictionImpulse += frictionDelta;
+
+            if (std::abs(frictionDelta) < impulseSlop){
+                continue;
+            }
 
             Vector2 impulse = tangent * frictionDelta;
 
