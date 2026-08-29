@@ -3,7 +3,9 @@
 | Heading         |
 |-----------------|
 | [Maths](#maths) |
-|
+| [Physics](#physics) |
+| [Rendering](#rendering) |
+| [Shapes](#shapes) |
 
 # Maths
 
