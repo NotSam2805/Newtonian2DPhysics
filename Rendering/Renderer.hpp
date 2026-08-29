@@ -13,8 +13,6 @@ namespace n2p{
             Colour backgroundColour;
 
             Camera *camera;
-
-            const int CIRCLE_POINTS = 100;
             
             // Draw functions
             void DrawBody(const Rigidbody& body);
