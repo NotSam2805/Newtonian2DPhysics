@@ -1,6 +1,7 @@
 #include "CollisionSolver.hpp"
 #include <algorithm>
 #include <cmath>
+#include <iostream>
 
 namespace n2p{
 
@@ -115,7 +116,7 @@ namespace n2p{
 
             if (tangent.MagnitudeSqrd() < 0.00001f){
                 // Very small (or no) velocity along tangent
-                tangent = Vector2::Zero();
+                continue;
             }
             tangent.Normalise();
 
@@ -132,14 +133,13 @@ namespace n2p{
 
             float maxFriction = std::sqrt(bodyA.friction * bodyB.friction) * contact.normalImpulse;
 
-            frictionDelta = std::clamp(frictionDelta, -maxFriction, maxFriction);
+            float newFriction = contact.frictionImpulse + frictionDelta;
 
-            
-            contact.frictionImpulse += frictionDelta;
+            newFriction = std::clamp(newFriction, -maxFriction, maxFriction);
 
-            if (std::abs(frictionDelta) < impulseSlop){
-                continue;
-            }
+            frictionDelta = newFriction - contact.frictionImpulse;
+
+            contact.frictionImpulse = newFriction;
 
             Vector2 impulse = tangent * frictionDelta;
 
