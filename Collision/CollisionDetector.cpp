@@ -260,6 +260,8 @@ namespace n2p{
         const Polygon* polyA = static_cast<const Polygon*>(bodyA.GetShape());
         const Polygon* polyB = static_cast<const Polygon*>(bodyB.GetShape());
 
+        // Use SAT to find collision
+
         float minimumOverlap = std::numeric_limits<float>::max();
         Vector2 collisionNormal;
         Vector2 referenceEdgeA;
