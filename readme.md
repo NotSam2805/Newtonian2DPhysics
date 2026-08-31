@@ -8,4 +8,8 @@ Documentation can be found [here](doc.md)
 
 See the [template](template.cpp) for simple use for running the physics engine and renderer at 60fps.
 
-## Structure
+## Planned features
+
+- 'Warm Starting' collision impulses
+- Input handling, leading to:
+- Interaction with physics during run time
