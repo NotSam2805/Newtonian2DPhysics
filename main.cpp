@@ -59,7 +59,7 @@ int main(int argc, char *argv[]){
         ),
         0.0f
     );
-    floor.restitution = 0.5f;
+    floor.restitution = 0.0f;
     floor.friction = 1.0f;
     world.AddBody(&floor);
 
@@ -77,7 +77,7 @@ int main(int argc, char *argv[]){
         ),
         1.0f
     );
-    box1.restitution = 1.0f;
+    box1.restitution = 0.5f;
     box1.friction = 1.0f;
     world.AddBody(&box1);
 
@@ -95,7 +95,7 @@ int main(int argc, char *argv[]){
         ),
         5.0f
     );
-    box2.restitution = 1.0f;
+    box2.restitution = 0.5f;
     box2.friction = 1.0f;
     world.AddBody(&box2);
 

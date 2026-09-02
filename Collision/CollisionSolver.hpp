@@ -5,11 +5,10 @@ namespace n2p{
     class CollisionSolver{
         public:
             // Avoid correcting small movements to reduce jitter
-            static constexpr float slop = 0.1f;
-            static constexpr float correctionPercent = 1.0f;
-            static constexpr float impulseSlop = 0.1f;
+            static constexpr float slop = 0.01f;
+            static constexpr float correctionPercent = 0.8f;
 
-            static constexpr unsigned int iterations = 15;
+            static constexpr unsigned int iterations = 20;
 
             static void CorrectPosition(const Manifold& manifold);
             static void FindTargetVelocities(Manifold& manifold);

@@ -1,7 +1,6 @@
 #include "CollisionSolver.hpp"
 #include <algorithm>
 #include <cmath>
-#include <iostream>
 
 namespace n2p{
 
@@ -80,10 +79,6 @@ namespace n2p{
             float impulseChange = newImpulse - contact.normalImpulse;
 
             contact.normalImpulse = newImpulse;
-
-            if(std::abs(impulseChange) < impulseSlop){
-                continue;
-            }
 
             // Only apply the change
             Vector2 impulse = manifold.normal * impulseChange;

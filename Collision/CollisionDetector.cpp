@@ -268,6 +268,9 @@ namespace n2p{
         Vector2 referenceEdgeB;
         bool referenceIsA = true;
 
+        // To find correct reference (and incident) edge, need to check distance from edge to body
+        float minDistanceSqrd = std::numeric_limits<float>::max();
+
         // Check all axis from edges from polyA
         size_t vertexCount = polyA->GetVertexCount();
 
@@ -289,11 +292,18 @@ namespace n2p{
             float overlap = GetOverlap(projectionA, projectionB);
 
             if (overlap <= minimumOverlap){
-                minimumOverlap = overlap;
-                collisionNormal = axis;
+                
+                Vector2 averagePos = (a + b) / 2.0f;
+                float distanceSqrd = (bodyB.GetPosition() - averagePos).MagnitudeSqrd();
 
-                referenceEdgeA = a;
-                referenceEdgeB = b;
+                minimumOverlap = overlap;
+                if (distanceSqrd < minDistanceSqrd){
+                    collisionNormal = axis;
+
+                    referenceEdgeA = a;
+                    referenceEdgeB = b;
+                    minDistanceSqrd = distanceSqrd;
+                }
             }
         }
 
@@ -318,12 +328,18 @@ namespace n2p{
             float overlap = GetOverlap(projectionA, projectionB);
 
             if (overlap <= minimumOverlap){
-                minimumOverlap = overlap;
-                collisionNormal = axis;
+                Vector2 averagePos = (a + b) / 2.0f;
+                float distanceSqrd = (bodyA.GetPosition() - averagePos).MagnitudeSqrd();
 
-                referenceEdgeA = a;
-                referenceEdgeB = b;
-                referenceIsA = false;
+                minimumOverlap = overlap;
+                if (distanceSqrd < minDistanceSqrd){
+                    collisionNormal = axis;
+
+                    referenceEdgeA = a;
+                    referenceEdgeB = b;
+                    referenceIsA = false;
+                    minDistanceSqrd = distanceSqrd;
+                }
             }
         }
 
@@ -402,8 +418,10 @@ namespace n2p{
             return false;
         }
 
-        float referenceOffset = referenceNormal.Dot(referenceEdgeA);
-
+        float offsetA = referenceNormal.Dot(referenceEdgeA);
+        float offsetB =  referenceNormal.Dot(referenceEdgeB);
+        float referenceOffset = std::max(offsetA, offsetB);
+        
         for (int i = 0; i < count; ++i){
             float seperation = referenceNormal.Dot(clippedPoints[i]) - referenceOffset;
 
