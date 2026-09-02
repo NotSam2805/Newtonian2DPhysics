@@ -21,9 +21,7 @@ namespace n2p{
 
         std::vector<Manifold> collisionManifolds = CollisionDetector::DetectCollisions(bodies);
 
-        for (Manifold& manifold : collisionManifolds){
-            CollisionSolver::SolveCollision(manifold);
-        }
+        CollisionSolver::SolveCollisions(collisionManifolds);
 
         for (Rigidbody* body : bodies){
             body->IntegratePosition(dt);

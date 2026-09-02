@@ -1,5 +1,6 @@
 #pragma once
 #include "Contact.hpp"
+#include <vector>
 
 namespace n2p{
     class CollisionSolver{
@@ -14,6 +15,6 @@ namespace n2p{
             static void FindTargetVelocities(Manifold& manifold);
             static void SolveNormal(Manifold& manifold);
             static void SolveTangent(Manifold& manifold);
-            static void SolveCollision(Manifold& manifold);
+            static void SolveCollisions(std::vector<Manifold> manifolds);
     };
 }

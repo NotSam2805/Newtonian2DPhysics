@@ -143,18 +143,19 @@ namespace n2p{
         }
     }
 
-    void CollisionSolver::SolveCollision(Manifold& manifold){
-        if (!manifold.colliding){
-            return;
+    void CollisionSolver::SolveCollisions(std::vector<Manifold> manifolds){
+        for (Manifold& manifold : manifolds){
+            CorrectPosition(manifold);
+
+            FindTargetVelocities(manifold);
         }
-
-        CorrectPosition(manifold);
-
-        FindTargetVelocities(manifold);
+        
 
         for (int i = 0; i < iterations; ++i){
-            SolveNormal(manifold);
-            SolveTangent(manifold);
+            for (Manifold& manifold : manifolds){
+                SolveNormal(manifold);
+                SolveTangent(manifold);
+            }
         }
     }
 }
