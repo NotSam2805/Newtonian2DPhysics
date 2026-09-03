@@ -6,6 +6,8 @@ Documentation can be found [here](doc.md)
 
 Demo is in [demo.cpp](demo.cpp) and is compiled in [demo.exe](demo.exe)
 
+![Recording of demo](n2pDemo.gif)
+
 ## Use
 
 See the [template](template.cpp) for simple use for running the physics engine and renderer at ~60fps.
