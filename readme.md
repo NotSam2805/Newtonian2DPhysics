@@ -10,6 +10,16 @@ Demo is in [demo.cpp](demo.cpp) and is compiled in [demo.exe](demo.exe)
 
 See the [template](template.cpp) for simple use for running the physics engine and renderer at ~60fps.
 
+Files can be compiled, with SDL2, using g++ from GNU, using this command:
+
+```
+g++ -I SDL2\include -L SDL2\lib -o NAME FILE.cpp Maths/*.cpp Physics/*.cpp Shapes/*.cpp Rendering/*.cpp Collision/*.cpp -lmingw32 -lSDL2main -lSDL2
+```
+
+```NAME``` - the file name of the resulting binary
+
+```FILE``` - the name of the file to compile
+
 ## Features
 
 Currently is a 'bare-bones' system.
