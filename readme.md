@@ -4,7 +4,7 @@ A complete, self contained, Physics Engine and Render Pipeline. This is meant to
 
 Documentation can be found [here](doc.md)
 
-Demo is in [main.cpp](main.cpp) and is compiled in [main.exe](main.exe)
+Demo is in [demo.cpp](demo.cpp) and is compiled in [demo.exe](demo.exe)
 
 ## Use
 
