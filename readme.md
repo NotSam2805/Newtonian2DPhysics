@@ -1,4 +1,4 @@
-# Newtonian Physics Simulation
+# Newtonian Physics Engine
 
 A complete, self contained, Physics Engine and Render Pipeline. This is meant to provide the foundation for future projects (game engine ect), and be able to handle high numbers of objects efficiently. Complete simple render pipeline, physics handling, collision detection and resolution, and maths tools for all these systems.
 
