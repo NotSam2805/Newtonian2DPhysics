@@ -23,6 +23,7 @@ Rigidbody simulation, including:
   + SAT narrow phase
 - Collision solving
   + Sequential impulse solver for multiple contacts
+- Static bodies (Rigidbodies with mass, inertia, and their inverses set to 0)
 
 ## Planned features
 
