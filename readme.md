@@ -4,13 +4,13 @@ A complete, self contained, Physics Engine and Render Pipeline. This is meant to
 
 Documentation can be found [here](doc.md)
 
-Demo is in [demo.cpp](demo.cpp) and is compiled in [demo.exe](demo.exe)
+Demo is in [demo.cpp](Examples/demo.cpp) and is compiled in [demo.exe](Examples/demo.exe)
 
 ![Recording of demo](n2pDemo.gif)
 
 ## Use
 
-See the [template](template.cpp) for simple use for running the physics engine and renderer at ~60fps.
+See the [template](Examples/template.cpp) for simple use for running the physics engine and renderer at ~60fps.
 
 Files can be compiled, with SDL2, using g++ from GNU, using this command:
 
@@ -21,6 +21,8 @@ g++ -I SDL2\include -L SDL2\lib -o NAME FILE.cpp Maths/*.cpp Physics/*.cpp Shape
 ```NAME``` - the file name of the resulting binary
 
 ```FILE``` - the name of the file to compile
+
+*Like found in [MakeFile](Examples/Makefile)*
 
 ## Features
 
@@ -42,8 +44,6 @@ Rigidbody simulation, including:
 - Constraints
 - Tunneling prevention and handling
 - 'Warm Starting' collision impulses
-- Input handling, leading to:
-- Interaction with physics during run time
 - Stabilisation (Baumgarte?)
 - Debug drawing
 - Physics Layers

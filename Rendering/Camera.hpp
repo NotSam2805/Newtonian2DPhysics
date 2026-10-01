@@ -1,5 +1,5 @@
 #pragma once
-#include "../Maths/Maths.hpp"
+#include "include/Maths/Maths.hpp"
 
 namespace n2p{
     struct Camera{

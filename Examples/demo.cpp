@@ -3,9 +3,8 @@
 #include <vector>
 
 #include "Physics/Physics.hpp"
-#include "Rendering/Renderer.hpp"
+#include "../Rendering/Renderer.hpp"
 #include "Shapes/Shapes.hpp"
-#include "SDL2/include/SDL.h"
 
 #include <chrono>
 
