@@ -4,7 +4,7 @@ A complete, self contained, Physics Engine and Render Pipeline. This is meant to
 
 Documentation can be found [here](doc.md)
 
-Demo is in [demo.cpp](Examples/demo.cpp) and is compiled in [demo.exe](Examples/demo.exe)
+Demo example is in [demo.cpp](Examples/demo.cpp) and is compiled in [demo.exe](build-ucrt64/N2Pdemo.exe)
 
 ![Recording of demo](n2pDemo.gif)
 

@@ -22,6 +22,7 @@ add_library(N2P STATIC
 
     src/Shapes/Circle.cpp
     src/Shapes/Polygon.cpp
+    src/Shapes/Rect.cpp
 
     src/Collision/CollisionDetector.cpp
     src/Collision/CollisionSolver.cpp
@@ -38,12 +39,13 @@ target_include_directories(N2P
 
 find_package(SDL2 CONFIG REQUIRED)
 
-add_executable(Newton2DDemo
+add_executable(N2Pdemo
     Examples/demo.cpp
     Examples/Rendering/Renderer.cpp
 )
 
-target_link_libraries(Newton2DDemo PRIVATE 
+target_link_libraries(N2Pdemo PRIVATE 
     N2P
+    SDL2::SDL2main
     SDL2::SDL2
 )

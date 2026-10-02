@@ -1,0 +1,4 @@
+C:/Users/Owner/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/build-ucrt64/CMakeFiles/N2P.dir
+C:/Users/Owner/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/build-ucrt64/CMakeFiles/N2Pdemo.dir
+C:/Users/Owner/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/build-ucrt64/CMakeFiles/edit_cache.dir
+C:/Users/Owner/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/build-ucrt64/CMakeFiles/rebuild_cache.dir
