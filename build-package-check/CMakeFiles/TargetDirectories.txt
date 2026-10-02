@@ -1,0 +1,7 @@
+C:/Users/Owner/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/build-package-check/CMakeFiles/N2P.dir
+C:/Users/Owner/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/build-package-check/CMakeFiles/edit_cache.dir
+C:/Users/Owner/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/build-package-check/CMakeFiles/rebuild_cache.dir
+C:/Users/Owner/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/build-package-check/CMakeFiles/list_install_components.dir
+C:/Users/Owner/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/build-package-check/CMakeFiles/install.dir
+C:/Users/Owner/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/build-package-check/CMakeFiles/install/local.dir
+C:/Users/Owner/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/build-package-check/CMakeFiles/install/strip.dir

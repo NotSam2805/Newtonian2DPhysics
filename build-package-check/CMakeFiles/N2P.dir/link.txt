@@ -1,0 +1,2 @@
+C:\msys64\ucrt64\bin\ar.exe qc libN2P.a CMakeFiles/N2P.dir/src/Maths/Vector2.cpp.obj CMakeFiles/N2P.dir/src/Maths/MathsUtils.cpp.obj CMakeFiles/N2P.dir/src/Physics/Rigidbody.cpp.obj CMakeFiles/N2P.dir/src/Physics/PhysicsWorld.cpp.obj CMakeFiles/N2P.dir/src/Shapes/Circle.cpp.obj CMakeFiles/N2P.dir/src/Shapes/Polygon.cpp.obj CMakeFiles/N2P.dir/src/Shapes/Rect.cpp.obj CMakeFiles/N2P.dir/src/Collision/CollisionDetector.cpp.obj CMakeFiles/N2P.dir/src/Collision/CollisionSolver.cpp.obj
+C:\msys64\ucrt64\bin\ranlib.exe libN2P.a

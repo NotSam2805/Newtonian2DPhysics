@@ -12,6 +12,23 @@ Demo example is in [demo.cpp](Examples/demo.cpp) and is compiled in [demo.exe](b
 
 See the [template](Examples/template.cpp) for simple use for running the physics engine and renderer at ~60fps.
 
+### Install
+
+Build and install the library without the SDL2 demo:
+
+```sh
+cmake -S . -B build -DN2P_BUILD_DEMO=OFF
+cmake --build build
+cmake --install build --prefix <install-prefix>
+```
+
+In another CMake project, link the installed package with:
+
+```cmake
+find_package(N2P CONFIG REQUIRED)
+target_link_libraries(my_app PRIVATE N2P::N2P)
+```
+
 
 ## Features
 
