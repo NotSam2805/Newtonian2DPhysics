@@ -5,23 +5,45 @@ project(N2P
     LANGUAGES CXX
 )
 
+# =========================
+# N2P Library
+# =========================
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_library(N2P STATIC
 
     src/Maths/Vector2.cpp
+    src/Maths/MathsUtils.cpp
 
     src/Physics/Rigidbody.cpp
     src/Physics/PhysicsWorld.cpp
-    src/Physics/CollisionDetector.cpp
-    src/Physics/CollisionSolver.cpp
 
-    src/Physics/Shapes/Circle.cpp
-    src/Physics/Shapes/Polygon.cpp
+    src/Shapes/Circle.cpp
+    src/Shapes/Polygon.cpp
+
+    src/Collision/CollisionDetector.cpp
+    src/Collision/CollisionSolver.cpp
 )
 
 target_include_directories(N2P
     PUBLIC
         ${PROJECT_SOURCE_DIR}/include
+)
+
+# =========================
+# Demo
+# =========================
+
+find_package(SDL2 CONFIG REQUIRED)
+
+add_executable(Newton2DDemo
+    Examples/demo.cpp
+    Examples/Rendering/Renderer.cpp
+)
+
+target_link_libraries(Newton2DDemo PRIVATE 
+    N2P
+    SDL2::SDL2
 )

@@ -1,4 +1,4 @@
-#include "CollisionSolver.hpp"
+#include "n2p/Collision/CollisionSolver.hpp"
 #include <algorithm>
 #include <cmath>
 

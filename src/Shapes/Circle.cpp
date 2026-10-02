@@ -1,4 +1,4 @@
-#include "Circle.hpp"
+#include "n2p/Shapes/Circle.hpp"
 
 namespace n2p{
     // Constructor

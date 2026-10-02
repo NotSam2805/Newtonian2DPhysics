@@ -1,4 +1,4 @@
-#include "Vector2.hpp"
+#include "n2p/Maths/Vector2.hpp"
 #include <cmath>
 
 namespace n2p{

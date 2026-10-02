@@ -1,7 +1,6 @@
 #pragma once
 #include "SDL2/include/SDL.h"
-#include "include/n2p/Physics/Physics.hpp"
-#include "include/n2p/Shapes/Shapes.hpp"
+#include <n2p/N2P.hpp>
 #include "Camera.hpp"
 
 namespace n2p{

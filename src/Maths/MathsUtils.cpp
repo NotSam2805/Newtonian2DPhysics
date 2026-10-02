@@ -1,4 +1,4 @@
-#include "MathsUtils.hpp"
+#include "n2p/Maths/MathsUtils.hpp"
 
 namespace n2p{
     inline float Clamp(float value, float min, float max){

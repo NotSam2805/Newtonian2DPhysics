@@ -1,0 +1,10 @@
+^C:\USERS\OWNER\ONEDRIVE\PROGRAMMINGSTUFF\C++\NEWTONIAN2DPHYSICS\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Owner/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics -BC:/Users/Owner/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/build --check-stamp-file C:/Users/Owner/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

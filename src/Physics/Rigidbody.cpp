@@ -1,4 +1,4 @@
-#include "Rigidbody.hpp"
+#include "n2p/Physics/Rigidbody.hpp"
 #include <memory>
 #include <cmath>
 

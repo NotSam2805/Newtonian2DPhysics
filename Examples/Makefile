@@ -1,2 +1,0 @@
-all:
-	g++ -I SDL2\include -L SDL2\lib -o demo demo.cpp Maths/*.cpp Physics/*.cpp Shapes/*.cpp Rendering/*.cpp Collision/*.cpp -lmingw32 -lSDL2main -lSDL2

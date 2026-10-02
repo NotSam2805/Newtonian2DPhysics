@@ -2,9 +2,8 @@
 #include <memory>
 #include <vector>
 
-#include "Physics/Physics.hpp"
-#include "../Rendering/Renderer.hpp"
-#include "Shapes/Shapes.hpp"
+#include <n2p/N2P.hpp>
+#include "Rendering/Renderer.hpp"
 
 #include <chrono>
 

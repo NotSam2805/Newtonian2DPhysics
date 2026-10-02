@@ -1,4 +1,4 @@
-#include "PhysicsWorld.hpp"
+#include "n2p/Physics/PhysicsWorld.hpp"
 #include <vector>
 
 namespace n2p{

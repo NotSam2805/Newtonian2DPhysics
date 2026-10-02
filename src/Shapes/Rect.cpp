@@ -1,4 +1,4 @@
-#include "Rect.hpp"
+#include "n2p/Shapes/Rect.hpp"
 
 namespace n2p{
     // Constructor

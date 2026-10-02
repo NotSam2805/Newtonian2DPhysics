@@ -1,9 +1,8 @@
 #include <iostream>
 #include <memory>
-#include "Physics/Physics.hpp"
+
+#include <n2p/N2P.hpp>
 #include "Rendering/Renderer.hpp"
-#include "Shapes/Shapes.hpp"
-#include "SDL2/include/SDL.h"
 
 #include <chrono>
 

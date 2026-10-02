@@ -1,5 +1,5 @@
-#include "Polygon.hpp"
-#include "Shape.hpp"
+#include "n2p/Shapes/Polygon.hpp"
+#include "n2p/Shapes/Shape.hpp"
 #include <vector>
 
 namespace n2p{

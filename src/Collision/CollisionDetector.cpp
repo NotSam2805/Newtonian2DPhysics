@@ -1,4 +1,4 @@
-#include "CollisionDetector.hpp"
+#include "n2p/Collision/CollisionDetector.hpp"
 #include <limits>
 #include <cmath>
 
