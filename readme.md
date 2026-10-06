@@ -29,20 +29,20 @@ find_package(N2P CONFIG REQUIRED)
 target_link_libraries(my_app PRIVATE N2P::N2P)
 ```
 
-
 ## Features
 
 Currently is a 'bare-bones' system.
 
 Rigidbody simulation, including:
+
 - Position and velocity integration
 - Force handling
 - Torque and rotation handling
 - Collision detection
-  + AABB broad phase
-  + SAT narrow phase
+  - AABB broad phase
+  - SAT narrow phase
 - Collision solving
-  + Sequential impulse solver for multiple contacts
+  - Sequential impulse solver for multiple contacts
 - Static bodies (Rigidbodies with mass, inertia, and their inverses set to 0)
 
 ## Planned features
@@ -51,6 +51,5 @@ Rigidbody simulation, including:
 - Tunneling prevention and handling
 - 'Warm Starting' collision impulses
 - Stabilisation (Baumgarte?)
-- Debug drawing
 - Physics Layers
 - Multithreading optimisation
