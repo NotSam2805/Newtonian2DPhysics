@@ -6,7 +6,6 @@
 |-----------------|
 | [Maths](#maths) |
 | [Physics](#physics) |
-| [Rendering](#rendering) |
 | [Shapes](#shapes) |
 | [Collision](#collision) |
 
