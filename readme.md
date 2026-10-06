@@ -2,7 +2,7 @@
 
 A complete, self contained, Physics Engine and Render Pipeline. This is meant to provide the foundation for future projects (game engine ect), and be able to handle high numbers of objects efficiently. Complete simple render pipeline, physics handling, collision detection and resolution, and maths tools for all these systems.
 
-Documentation can be found [here](doc.md)
+[Documentation](doc.md)
 
 Demo example is in [demo.cpp](Examples/demo.cpp) and is compiled in [demo.exe](build-ucrt64/N2Pdemo.exe)
 
