@@ -287,7 +287,7 @@ Returns a [Projection](#projection) of a polygon onto an axis.
 
 ### ProjectCirle
 
-Returns a [Projection](#projection) of a polygon onto an axis.
+Returns a [Projection](#projection) of a circle onto an axis.
 
 ### Overlap
 
