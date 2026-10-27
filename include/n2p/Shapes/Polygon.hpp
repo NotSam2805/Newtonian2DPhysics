@@ -15,6 +15,8 @@ namespace n2p {
 
             // Constructor
             explicit Polygon(std::vector<Vector2*> vertices, Colour colour);
+            // Destructor
+            ~Polygon();
 
             static Polygon Square(Colour colour) {
                 return Polygon({

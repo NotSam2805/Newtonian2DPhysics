@@ -6,6 +6,13 @@ namespace n2p{
     // Constructor
     Polygon::Polygon(std::vector<Vector2*> vertices, Colour colour) : vertices(vertices), colour(colour) {}
 
+    // Destructor
+    Polygon::~Polygon(){
+        for (Vector2* vertex : vertices) {
+            delete vertex;
+        }
+    }
+
     // Getters
     const ShapeType Polygon::GetType() const{ return ShapeType::polygon; }
 

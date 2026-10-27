@@ -7,11 +7,13 @@ set(CMAKE_DEPENDS_GENERATOR "MinGW Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
+  "C:/Program Files/CMake/share/cmake-4.4/Modules/BasicConfigVersion-SameMajorVersion.cmake.in"
   "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCXXInformation.cmake"
   "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCommonLanguageInclude.cmake"
   "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeGenericSystem.cmake"
   "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeInitializeConfigs.cmake"
   "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeLanguageInformation.cmake"
+  "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakePackageConfigHelpers.cmake"
   "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeRCInformation.cmake"
   "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeSystemSpecificInformation.cmake"
   "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeSystemSpecificInitialize.cmake"
@@ -19,6 +21,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "C:/Program Files/CMake/share/cmake-4.4/Modules/Compiler/GNU-CXX.cmake"
   "C:/Program Files/CMake/share/cmake-4.4/Modules/Compiler/GNU.cmake"
   "C:/Program Files/CMake/share/cmake-4.4/Modules/FeatureSummary.cmake"
+  "C:/Program Files/CMake/share/cmake-4.4/Modules/GNUInstallDirs.cmake"
   "C:/Program Files/CMake/share/cmake-4.4/Modules/Internal/CMakeCXXLinkerInformation.cmake"
   "C:/Program Files/CMake/share/cmake-4.4/Modules/Internal/CMakeCommonLinkerInformation.cmake"
   "C:/Program Files/CMake/share/cmake-4.4/Modules/Linker/GNU-CXX.cmake"
@@ -33,10 +36,12 @@ set(CMAKE_MAKEFILE_DEPENDS
   "C:/Program Files/CMake/share/cmake-4.4/Modules/Platform/Windows-windres.cmake"
   "C:/Program Files/CMake/share/cmake-4.4/Modules/Platform/Windows.cmake"
   "C:/Program Files/CMake/share/cmake-4.4/Modules/Platform/WindowsPaths.cmake"
+  "C:/Program Files/CMake/share/cmake-4.4/Modules/WriteBasicConfigVersionFile.cmake"
   "C:/Users/Owner/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/CMakeLists.txt"
   "CMakeFiles/4.4.3/CMakeCXXCompiler.cmake"
   "CMakeFiles/4.4.3/CMakeRCCompiler.cmake"
   "CMakeFiles/4.4.3/CMakeSystem.cmake"
+  "C:/Users/Owner/OneDrive/ProgrammingStuff/C++/Newtonian2DPhysics/cmake/N2PConfig.cmake.in"
   "C:/msys64/ucrt64/lib/cmake/SDL2/SDL2Config.cmake"
   "C:/msys64/ucrt64/lib/cmake/SDL2/SDL2ConfigVersion.cmake"
   "C:/msys64/ucrt64/lib/cmake/SDL2/SDL2Targets-release.cmake"
@@ -58,6 +63,8 @@ set(CMAKE_MAKEFILE_OUTPUTS
 
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
+  "N2PConfig.cmake"
+  "N2PConfigVersion.cmake"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
