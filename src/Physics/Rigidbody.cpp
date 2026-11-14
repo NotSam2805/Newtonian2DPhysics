@@ -81,6 +81,13 @@ namespace n2p{
         rotationalVelocity += torque * inverseInertia;
     }
 
+    void Rigidbody::AddForceAtPoint(const Vector2& force, const Vector2& point){
+        Vector2 offset = point - transform.position;
+
+        accumulatedForces += force;
+        accumulatedTorque += Vector2::Cross(offset, force);
+    }
+
     Vector2 Rigidbody::GetVelocityAtPoint(const Vector2& point) const {
         Vector2 r = point - transform.position;
         return velocity + Vector2::Cross(rotationalVelocity, r);
