@@ -44,7 +44,7 @@ namespace n2p{
         return Vector2(-angularVelocity * r.y, angularVelocity * r.x);
     }
 
-    // Give the vector rotated around an origin, rotation given in radians clockwise
+    // Give the vector rotated around an origin, rotation given in radians counter-clockwise
     Vector2 Vector2::Rotate(float rotation, const Vector2& origin) const{
         float c = std::cos(rotation);
         float s = std::sin(rotation);
